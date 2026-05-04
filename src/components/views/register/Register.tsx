@@ -179,7 +179,7 @@ const Register = () => {
                             )}
                         />
 
-                        <Button variant="danger" size="lg" type="submit" className="w-full">
+                        <Button variant="danger" size="lg" type="submit" className="w-full rounded-lg ">
                             {isPendingRegister ? (
                                 <Spinner color="current" />
                             ) : "Register"}
