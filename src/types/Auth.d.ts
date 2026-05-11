@@ -6,7 +6,7 @@ interface IRegister {
   username: string;
   email: string;
   password: string;
-  passwordConfirmation: string;
+  confirmPassword: string;
 }
 
 interface IActivation {

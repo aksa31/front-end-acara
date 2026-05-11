@@ -12,18 +12,18 @@ const registerSchema = yup.object().shape({
     username: yup.string().required("Please input your username"),
     email: yup.string().email("Please input a valid email").required("Please input your email"),
     password: yup.string().min(8, "Password must be at least 8 characters").required("Please input your password"),
-    passwordConfirmation: yup.string().oneOf([yup.ref("password"), ""], "Passwords must match").required("Please confirm your password")
+    confirmPassword: yup.string().oneOf([yup.ref("password"), ""], "Passwords must match").required("Please confirm your password")
 })
 
 const useRegister = () => {
     const router = useRouter();
     const [visiblePassword, setVisiblePassword] = useState({
         password: false,
-        passwordConfirmation: false,
+        confirmPassword: false,
     });
 
     const handleVisiblePassword = (
-        key: "password" | "passwordConfirmation"
+        key: "password" | "confirmPassword"
     ) => {
         setVisiblePassword({
             ...visiblePassword,

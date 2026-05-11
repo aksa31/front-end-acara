@@ -26,25 +26,30 @@ export default NextAuth({
                     password: string
                 }
 
-                const result = await authServices.login({
-                    identifier,
-                    password
-                });
-
-                const accessToken = result.data.data;
-
-                const me = await authServices.getProfileWithToken(accessToken);
-                const user = me.data.data;
-
-                if (
-                    accessToken &&
-                    result.status === 200 &&
-                    user._id &&
-                    me.status === 200
-                ) {
-                    user.accessToken = accessToken;
-                    return user
-                } else {
+                try {
+                    
+                    const result = await authServices.login({
+                        identifier,
+                        password
+                    });
+    
+                    const accessToken = result.data.data;
+    
+                    const me = await authServices.getProfileWithToken(accessToken);
+                    const user = me.data.data;
+    
+                    if (
+                        accessToken &&
+                        result.status === 200 &&
+                        user._id &&
+                        me.status === 200
+                    ) {
+                        user.accessToken = accessToken;
+                        return user
+                    } else {
+                        return null
+                    }
+                } catch (error) {
                     return null
                 }
             },

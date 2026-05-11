@@ -30,8 +30,8 @@ const Register = () => {
             </div>
             <Card className="p-8">
                 <CardHeader>
-                    <h2 className="text-xl font-bold text-red-500">Create Account</h2>
-                    <p className="text-sm mb-4">
+                    <h2 className="text-2xl font-bold text-red-500">Create Account</h2>
+                    <p className="text-sm mt-2 mb-4">
                         Have an account?&nbsp;
                         <Link href='/auth/login' className="font-semibold text-red-400">Login here</Link>
                     </p>
@@ -143,15 +143,15 @@ const Register = () => {
                             )}
                         />
                         <Controller
-                            name="passwordConfirmation"
+                            name="confirmPassword"
                             control={control}
                             render={({ field }) => (
                                 <TextField
                                     {...field}
-                                    isInvalid={errors.passwordConfirmation !== undefined}
+                                    isInvalid={errors.confirmPassword !== undefined}
                                     autoComplete="off"
                                     aria-label="Password Confirmation"
-                                    type={visiblePassword.passwordConfirmation ? "text" : "password"}
+                                    type={visiblePassword.confirmPassword ? "text" : "password"}
                                 >
                                     <InputGroup>
                                         <InputGroupInput
@@ -162,9 +162,9 @@ const Register = () => {
                                             <Button
                                                 className="focus:outline-none bg-black w-8 h-8 "
                                                 type="button"
-                                                onClick={() => handleVisiblePassword("passwordConfirmation")}
+                                                onClick={() => handleVisiblePassword("confirmPassword")}
                                             >
-                                                {visiblePassword.passwordConfirmation ? (
+                                                {visiblePassword.confirmPassword ? (
                                                     <FaEye />
                                                 ) : (
                                                     <FaEyeSlash />
@@ -173,7 +173,7 @@ const Register = () => {
                                         </InputGroupSuffix>
                                     </InputGroup>
                                     <FieldError>
-                                        {errors.passwordConfirmation?.message}
+                                        {errors.confirmPassword?.message}
                                     </FieldError>
                                 </TextField>
                             )}
