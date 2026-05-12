@@ -50,6 +50,7 @@ export default NextAuth({
                         return null
                     }
                 } catch (error) {
+                    console.log(error)
                     return null
                 }
             },
