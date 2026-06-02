@@ -31,6 +31,7 @@ const DashboardLayoutSidebar = ({ sidebarItems, isOpen }: PropTypes) => {
                     <Image
                         src="/images/general/logo.svg"
                         alt="logo"
+                        loading="eager"
                         width={180}
                         height={60}
                         className="mb-6 w-32"
@@ -47,11 +48,11 @@ const DashboardLayoutSidebar = ({ sidebarItems, isOpen }: PropTypes) => {
                         <ListBox.Item
                             id={item.key}
                             className={cn("my-1 h-12 text-2xl", {
-                                "bg-red-500 text-white": router.pathname.startsWith(item.href)
+                                "bg-red-500 text-white": router.pathname === (item.href)
                             })}
                             textValue={item.label}
                             aria-labelledby={item.label}
-
+                            href={item.href}
                         >
                             {item.icon}
                             <p className="text-sm">{item.label}</p>
@@ -66,7 +67,7 @@ const DashboardLayoutSidebar = ({ sidebarItems, isOpen }: PropTypes) => {
                     fullWidth
                     variant="ghost"
                     className="flex justify-start rounded-lg px-2 py-1.5 text-red-500"
-                    onClick={() => signOut()}
+                    onPress={() => signOut()}
                 >
                     <CiLogout />
                     Logout

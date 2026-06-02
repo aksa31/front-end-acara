@@ -27,7 +27,7 @@ const RegisterSuccess = () => {
                 <h1 className="text-3xl font-bold text-red-500">Create Account Success</h1>
                 <p className="text-xl font-bold text-gray-500">Check your email for account activation</p>
                 <Link href="/">
-                    <Button variant="outline" size="lg" className="mt-4 w-fit border-red-500 text-red-500 rounded-lg" onClick={() => router.push('/')}>
+                    <Button variant="outline" size="lg" className="mt-4 w-fit border-red-500 text-red-500 rounded-lg" onPress={() => router.push('/')}>
                         Back To Home
                     </Button>
                 </Link>

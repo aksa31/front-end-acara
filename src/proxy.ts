@@ -16,6 +16,7 @@ export async function proxy(request: NextRequest) {
     if (token) {
       return NextResponse.redirect(new URL("/", request.url));
     }
+    return NextResponse.next();
   }
 
   if (pathname.startsWith("/admin")) {
@@ -24,9 +25,10 @@ export async function proxy(request: NextRequest) {
       url.searchParams.set("callbackUrl", encodeURI(request.url));
       return NextResponse.redirect(url);
     }
-    console.log(token);
 
-    if (token?.user?.role !== "admin") {
+    console.log("token :",token); 
+
+    if (token?.user?.roles !== "admin") {
       return NextResponse.redirect(new URL("/", request.url));
     }
 
@@ -34,18 +36,24 @@ export async function proxy(request: NextRequest) {
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     }
 
-    if (pathname === "/member") {
-      if (!token) {
-        const url = new URL("/auth/login", request.url);
-        url.searchParams.set("callbackUrl", encodeURI(request.url));
-        return NextResponse.redirect(url);
-      }
-
-      if (pathname === "/member") {
-        return NextResponse.redirect(new URL("/member/dashboard", request.url));
-      }
-    }
+    return NextResponse.next();
   }
+
+  if (pathname.startsWith("/member")) {
+    if (!token) {
+      const url = new URL("/auth/login", request.url);
+      url.searchParams.set("callbackUrl", encodeURI(request.url));
+      return NextResponse.redirect(url);
+    }
+
+    if (pathname === "/member") {
+      return NextResponse.redirect(new URL("/member/dashboard", request.url));
+    }
+
+    return NextResponse.next();
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {

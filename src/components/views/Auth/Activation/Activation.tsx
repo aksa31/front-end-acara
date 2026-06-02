@@ -36,7 +36,7 @@ const Activation = (props: PropTypes) => {
                     {status === 'success' ? "Thank you for reegister account in Acara" : "Confirmation is invalid"}
                     </p>
                 <Link href="/">
-                    <Button variant="outline" size="lg" className="mt-4 w-fit border-red-500 text-red-500 rounded-lg" onClick={() => router.push('/')}>
+                    <Button variant="outline" size="lg" className="mt-4 w-fit border-red-500 text-red-500 rounded-lg" onPress={() => router.push('/')}>
                         Back To Home
                     </Button>
                 </Link>

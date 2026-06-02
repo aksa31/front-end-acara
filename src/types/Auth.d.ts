@@ -20,7 +20,7 @@ interface ILogin {
 
 interface UserExtended extends User {
   accessToken?: string;
-  role?: string;
+  roles?: string;
 }
 
 interface SessionExtended extends Session {
