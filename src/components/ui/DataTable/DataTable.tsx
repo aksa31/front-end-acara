@@ -7,13 +7,13 @@ import { cn } from "@/utils/cn";
 interface PropTypes {
     buttonTopContentLabel?: string;
     columns: Record<string, unknown>[];
-    limit: number;
+    limit: number | string;
     currentPage: number;
     totalPages: number;
     data: Record<string, unknown>[];
     isLoading?: boolean;
     onChangeSearch: (value: string) => void;
-    onChangeLimit: (value: number) => void;
+    onChangeLimit: (value: Key | Key[] | null) => void;
     onChangePage: (page: number) => void;
     onClickButtonTopContent?: () => void;
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
@@ -43,15 +43,11 @@ const DataTable = (props: PropTypes) => {
         return (
             <div className="flex items-center justify-center px-2 py-2 lg:justify-between">
                 <Select
-                    // defaultValue={LIMIT_LISTS[0].value}
+                    defaultValue={LIMIT_LISTS[0].value}
                     className="hidden max-w-36 h-10 lg:block"
-                    value={limit}
+                    value={Number(limit)}
                     selectionMode="single"
-                    onChange={(value) => {
-                        if (value !== null) {
-                            onChangeLimit(Number(value));
-                        }
-                    }}
+                    onChange={onChangeLimit}
                 >
                     <Select.Trigger>
                         Show :&nbsp;

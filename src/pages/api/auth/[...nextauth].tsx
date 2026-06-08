@@ -1,5 +1,5 @@
 import environment from "@/config/environment";
-import authServices from "@/services/auth.services";
+import authServices from "@/services/auth.service";
 import { JWTExtended, SessionExtended, UserExtended } from "@/types/Auth";
 import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -27,17 +27,17 @@ export default NextAuth({
                 }
 
                 try {
-                    
+
                     const result = await authServices.login({
                         identifier,
                         password
                     });
-    
+
                     const accessToken = result.data.data;
-    
+
                     const me = await authServices.getProfileWithToken(accessToken);
                     const user = me.data.data;
-    
+
                     if (
                         accessToken &&
                         result.status === 200 &&

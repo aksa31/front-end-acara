@@ -1,5 +1,42 @@
 @import "tailwindcss";
 @import "@heroui/styles"; 
+
+
+.toast--success {
+  background-color: black !important;
+}
+
+.toast--success .toast__title,
+.toast--success .toast__description {
+  color: white !important;
+}
+
+.toast--danger {
+  background-color: black !important;
+}
+
+.toast--danger .toast__title,
+.toast--danger .toast__description {
+  color: white !important;
+}
+
+.toast--warning {
+  background-color: black !important;
+}
+
+.toast--warning .toast__title,
+.toast--warning .toast__description {
+  color: white !important;
+}
+
+.toast--info {
+  background-color: black !important;
+}
+
+.toast--info .toast__title,
+.toast--info .toast__description {
+  color: white !important;
+}
 /* 
 :root {
   --background: #ffffff;

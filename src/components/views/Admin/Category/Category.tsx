@@ -1,27 +1,38 @@
 import DataTable from "@/components/ui/DataTable";
-import { Button, Dropdown } from "@heroui/react";
+import { Button, Dropdown, Pagination } from '@heroui/react';
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback } from "react";
+import { Key, ReactNode, useCallback, useEffect } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LIST_CATEGORY } from "./Category.constant";
 import { LIMIT_LISTS } from "@/constants/list.constants";
+import useCategory from "./useCategory";
+import InputFile from "@/components/ui/InputFile";
+import Toaster from "@/components/ui/Toaster";
 
 const Category = () => {
-    const { push } = useRouter()
+    const { push, isReady, query } = useRouter();
+    const { currentLimit, currentPage, dataCategory, isLoadingCategory, isRefetchingCategory, setURL, handleChangePage, handleChangeLimit, handleSearch } = useCategory();
+
+    useEffect(() => {
+        if (isReady) {
+            setURL();
+        }
+    }, [isReady])
+
     const renderCell = useCallback(
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category];
             switch (columnKey) {
-                case "icon":
-                    return (
-                        <Image
-                            src={`${cellValue}`}
-                            alt="icon"
-                            width={100}
-                            height={200}
-                        />
-                    );
+                // case "icon":
+                //     return (
+                //         <Image
+                //             src={`${cellValue}`}
+                //             alt="icon"
+                //             width={100}
+                //             height={200}
+                //         />
+                //     );
                 case "actions":
                     return (
                         <Dropdown>
@@ -50,28 +61,24 @@ const Category = () => {
     )
     return (
         <section>
-            <DataTable
-                onClickButtonTopContent={() => { }}
-                columns={COLUMN_LIST_CATEGORY}
-                data={[
-                    {
-                        key: 123,
-                        _id: "123",
-                        name: "Category 1",
-                        description: "Dscription 1",
-                        icon: "/images/general/logo.png"
-                    }
-                ]}
-                buttonTopContentLabel="Create Category"
-                renderCell={renderCell}
-                limit={LIMIT_LISTS[0].value}
-                currentPage={1}
-                totalPages={2}
-                onChangeLimit={() => { }}
-                onChangeSearch={() => { }}
-                onChangePage={() => { }}
-                isLoading={false}
-            />
+            {Object.keys(query).length > 0 && (
+                <DataTable
+                    onClickButtonTopContent={() => { }}
+                    columns={COLUMN_LIST_CATEGORY}
+                    data={dataCategory?.data || []}
+                    buttonTopContentLabel="Create Category"
+                    renderCell={renderCell}
+                    isLoading={isLoadingCategory || isRefetchingCategory}
+                    limit={String(currentLimit)}
+                    currentPage={Number(currentPage)}
+                    totalPages={3}
+                    onChangeLimit={handleChangeLimit}
+                    onChangePage={handleChangePage}
+                    onChangeSearch={handleSearch}
+                />
+            )}
+            <InputFile name="input" isDropable />
+            <Toaster/>
         </section>
     );
 };

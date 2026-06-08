@@ -7,8 +7,13 @@ interface PropTypes {
 }
 
 const PaginationWithEllipsis = ({ currentPage, total, onChangePage }: PropTypes) => {
-    const [page, setPage] = useState(1);
-    const totalPages = 12;
+    const [page, setPage] = useState(currentPage);
+    const totalPages = total;
+
+    const handleChangePage = (newPage: number) => {
+        setPage(newPage)
+        onChangePage?.(newPage)
+    }
 
     const getPageNumbers = () => {
         const pages: (number | "ellipsis")[] = [];
@@ -30,7 +35,9 @@ const PaginationWithEllipsis = ({ currentPage, total, onChangePage }: PropTypes)
             pages.push("ellipsis");
         }
 
-        pages.push(totalPages);
+        if (totalPages > 1) {
+            pages.push(totalPages);
+        }
 
         return pages;
     };
@@ -40,7 +47,10 @@ const PaginationWithEllipsis = ({ currentPage, total, onChangePage }: PropTypes)
             <Pagination>
                 <Pagination.Content>
                     <Pagination.Item>
-                        <Pagination.Previous isDisabled={page === 1} onPress={() => setPage((p) => p - 1)}>
+                        <Pagination.Previous
+                            isDisabled={page === 1}
+                            onPress={() => handleChangePage(page - 1)} // ← ganti
+                        >
                             <Pagination.PreviousIcon />
                             <span>Previous</span>
                         </Pagination.Previous>
@@ -52,14 +62,20 @@ const PaginationWithEllipsis = ({ currentPage, total, onChangePage }: PropTypes)
                             </Pagination.Item>
                         ) : (
                             <Pagination.Item key={p}>
-                                <Pagination.Link isActive={p === page} onPress={() => setPage(p)}>
+                                <Pagination.Link
+                                    isActive={p === page}
+                                    onPress={() => handleChangePage(p)} // ← ganti
+                                >
                                     {p}
                                 </Pagination.Link>
                             </Pagination.Item>
                         ),
                     )}
                     <Pagination.Item>
-                        <Pagination.Next isDisabled={page === totalPages} onPress={() => setPage((p) => p + 1)}>
+                        <Pagination.Next
+                            isDisabled={page === totalPages}
+                            onPress={() => handleChangePage(page + 1)} // ← ganti
+                        >
                             <span>Next</span>
                             <Pagination.NextIcon />
                         </Pagination.Next>

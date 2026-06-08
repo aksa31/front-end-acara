@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
+import { Toast } from "@heroui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,11 +24,12 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <main className={cn(inter.className)}>
-          <Component {...pageProps} />
-        </main>
-      </QueryClientProvider>
-    </SessionProvider>
+        <QueryClientProvider client={queryClient}>
+        <Toast.Provider placement="bottom end" />
+          <main className={cn(inter.className)}>
+            <Component {...pageProps} />
+          </main>
+        </QueryClientProvider>
+      </SessionProvider>
   );
 }

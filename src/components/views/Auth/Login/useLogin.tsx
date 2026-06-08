@@ -3,10 +3,11 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ILogin } from "@/types/Auth";
-import authServices from "@/services/auth.services";
+import authServices from "@/services/auth.service";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { toast } from "@heroui/react";
 
 const loginSchema = yup.object().shape({
     identifier: yup.string().required("Please input your email or password"),
@@ -16,7 +17,7 @@ const loginSchema = yup.object().shape({
 const useLogin = () => {
     const router = useRouter();
     const [isVisible, setIsVisible] = useState(false);
-    const toggleVisibility =  () => setIsVisible(!isVisible);
+    const toggleVisibility = () => setIsVisible(!isVisible);
     const callbackUrl: string = (router.query.callbackUrl as string) || "/";
 
     const {
@@ -43,13 +44,12 @@ const useLogin = () => {
     const { mutate: mutateLogin, isPending: isPendingLogin } = useMutation({
         mutationFn: loginService,
         onError(error) {
-            setError("root", {
-                message: error.message,
-            });
+            toast.danger(error.message);
         },
         onSuccess() {
-            router.push(callbackUrl);
             reset();
+            toast.success("Login successful");
+            router.push(callbackUrl);
         }
     });
 

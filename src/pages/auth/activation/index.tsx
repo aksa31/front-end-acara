@@ -1,15 +1,15 @@
 import AuthLayout from "@/components/layouts/AuthLayout"
 import Activation from "@/components/views/Auth/Activation";
-import authServices from "@/services/auth.services";
+import authServices from "@/services/auth.service";
 
 interface PropTypes {
     status: 'success' | 'failed'
 }
 
-const ActivationPage = (props : PropTypes) => {
+const ActivationPage = (props: PropTypes) => {
     return (
         <AuthLayout title="Acara | Activation">
-            <Activation {...props}/>
+            <Activation {...props} />
         </AuthLayout>
     )
 }
