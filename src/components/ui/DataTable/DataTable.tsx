@@ -26,7 +26,7 @@ const DataTable = (props: PropTypes) => {
                 <SearchField className="w-full sm:max-w-[24%]" onChange={onChangeSearch}>
                     <SearchField.Group>
                         <SearchField.SearchIcon />
-                        <SearchField.Input placeholder="Sarch by name" />
+                        <SearchField.Input placeholder="Search by name" />
                         <SearchField.ClearButton />
                     </SearchField.Group>
                 </SearchField>

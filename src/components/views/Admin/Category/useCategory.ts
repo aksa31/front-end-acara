@@ -1,6 +1,6 @@
 import { DELAY, LIMIT_DEFAULT, PAGE_DEFAULT } from "@/constants/list.constants";
 import useDebounce from "@/hooks/useDebounce";
-import categoryServices from "@/services/caregory.service";
+import categoryServices from "@/services/category.service";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { ChangeEvent, Key } from "react";
@@ -36,6 +36,7 @@ const useCategory = () => {
     data: dataCategory,
     isLoading: isLoadingCategory,
     isRefetching: isRefetchingCategory,
+    refetch: refetchCategory
   } = useQuery({
     queryKey: ["Category", currentPage, currentLimit, currentSearch],
     queryFn: () => getCategories(),
@@ -83,6 +84,7 @@ const useCategory = () => {
     currentLimit,
     currentSearch,
     dataCategory,
+    refetchCategory,
     isLoadingCategory,
     isRefetchingCategory,
     handleChangeLimit,

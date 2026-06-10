@@ -2,17 +2,31 @@ import DataTable from "@/components/ui/DataTable";
 import { Button, Dropdown, Pagination } from '@heroui/react';
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Key, ReactNode, useCallback, useEffect } from "react";
+import { Key, ReactNode, useCallback, useEffect, useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LIST_CATEGORY } from "./Category.constant";
 import { LIMIT_LISTS } from "@/constants/list.constants";
 import useCategory from "./useCategory";
 import InputFile from "@/components/ui/InputFile";
 import Toaster from "@/components/ui/Toaster";
+import AddCategoryModal from "./AddCategoryModal";
 
 const Category = () => {
+    const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const { push, isReady, query } = useRouter();
-    const { currentLimit, currentPage, dataCategory, isLoadingCategory, isRefetchingCategory, setURL, handleChangePage, handleChangeLimit, handleSearch } = useCategory();
+    const { 
+        currentLimit, 
+        currentPage, 
+        dataCategory, 
+        isLoadingCategory, 
+        isRefetchingCategory, 
+        refetchCategory,
+        setURL, 
+        handleChangePage, 
+        handleChangeLimit, 
+        handleSearch 
+    } = useCategory();
+
 
     useEffect(() => {
         if (isReady) {
@@ -63,22 +77,25 @@ const Category = () => {
         <section>
             {Object.keys(query).length > 0 && (
                 <DataTable
-                    onClickButtonTopContent={() => { }}
                     columns={COLUMN_LIST_CATEGORY}
                     data={dataCategory?.data || []}
                     buttonTopContentLabel="Create Category"
+                    onClickButtonTopContent={() => setIsOpenAddModal(true)}
                     renderCell={renderCell}
                     isLoading={isLoadingCategory || isRefetchingCategory}
                     limit={String(currentLimit)}
                     currentPage={Number(currentPage)}
                     totalPages={3}
                     onChangeLimit={handleChangeLimit}
-                    onChangePage={handleChangePage}
                     onChangeSearch={handleSearch}
+                    onChangePage={handleChangePage}
                 />
             )}
-            <InputFile name="input" isDropable />
-            <Toaster/>
+            <AddCategoryModal
+                isOpen={isOpenAddModal}
+                onOpenChange={setIsOpenAddModal}
+                refetchCategory={refetchCategory}
+            />
         </section>
     );
 };
