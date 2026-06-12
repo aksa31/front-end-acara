@@ -43,19 +43,19 @@ const Category = () => {
             const cellValue = category[columnKey as keyof typeof category];
             switch (columnKey) {
                 case "icon":
-    const iconUrl = `${cellValue}`;
-    const isValidUrl = iconUrl.startsWith("http") || iconUrl.startsWith("/");
-    
-    return isValidUrl ? (
-        <Image
-            src={iconUrl}
-            alt="icon"
-            width={100}
-            height={200}
-        />
-    ) : (
-        <span className="text-xs text-gray-400">No Icon</span>
-    );
+                    const iconUrl = `${cellValue}`;
+                    const isValidUrl = iconUrl.startsWith("http") || iconUrl.startsWith("/");
+
+                    return isValidUrl ? (
+                        <Image
+                            src={iconUrl}
+                            alt="icon"
+                            width={100}
+                            height={200}
+                        />
+                    ) : (
+                        <span className="text-xs text-gray-400">No Icon</span>
+                    );
                 case "actions":
                     return (
                         <Dropdown>
