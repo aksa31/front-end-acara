@@ -15,11 +15,21 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
         control,
         errors,
         isPendingAddCategory,
-        isPendingAddFile,
+        isPendingUploadFile,
+        preview,
         isSuccessAddCategory,
+        handleUploadIcon,
         handleAddCategory,
         handleSubmitForm,
+        handleDeleteIcon,
+        isPendingDeleteFile,
+        handleOnClose
     } = useAddCategoryModal(() => onOpenChange(false));
+
+    const disabledSubmit = 
+        isPendingAddCategory ||
+        isPendingUploadFile ||
+        isPendingDeleteFile
 
     useEffect(() => {
         if (isSuccessAddCategory) {
@@ -29,10 +39,10 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
 
     return (
         <Modal >
-            <Modal.Backdrop className="bg-black/80" isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal.Backdrop className="bg-black/80" isOpen={isOpen} onOpenChange={onOpenChange} >
                 <Modal.Container placement="center" scroll="inside" >
                     <Modal.Dialog >
-                        <Modal.CloseTrigger />
+                        <Modal.CloseTrigger onPress={() => handleOnClose()} />
                         <Modal.Header>
                             <Modal.Heading className="m-2 font-bold">Add Category</Modal.Heading>
                         </Modal.Header>
@@ -88,11 +98,14 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                                             <InputFile
                                                 isDropable
                                                 {...field}
-                                                onChange={(e) => {
-                                                    onChange(e.currentTarget.files)
-                                                }}
+                                                onDelete={() => handleDeleteIcon(onChange)}
+                                                onUpload={(files) => handleUploadIcon(files, onChange)}
+                                                isUploading={isPendingUploadFile}
+                                                isDeleting={isPendingDeleteFile}
                                                 isInvalid={errors.icon !== undefined}
                                                 errorMessage={errors.icon?.message}
+                                                preview={typeof preview === 'string'? preview : ""}
+                                                
                                             />
                                         )}
                                     />
@@ -101,9 +114,9 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                         </Modal.Body>
                         <Modal.Footer>
                             <Button
-                                className="bg-red-200 text-red-700"
-                                // onPress={onClose}
-                                isDisabled={isPendingAddCategory || isPendingAddFile}
+                                className="bg-red-200 text-red-700 font-semibold"
+                                onPress={() => handleOnClose()}
+                                isDisabled={disabledSubmit}
                                 slot="close"
                             >
                                 Cancel
@@ -112,9 +125,10 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                                 variant="danger"
                                 type="submit"
                                 form="add-category-form"
-                                isDisabled={isPendingAddCategory || isPendingAddFile}
+                                isDisabled={disabledSubmit}
+                                className="font-semibold"
                             >
-                                {isPendingAddCategory || isPendingAddFile ? (
+                                {isPendingAddCategory ? (
                                     <Spinner size="sm" color="current" />
                                 ) : (
                                     "Create Category"
