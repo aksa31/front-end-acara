@@ -10,9 +10,11 @@ import useCategory from "./useCategory";
 import InputFile from "@/components/ui/InputFile";
 import Toaster from "@/components/ui/Toaster";
 import AddCategoryModal from "./AddCategoryModal";
+import DeleteCategoryModal from "./DeleteCategoryModal";
 
 const Category = () => {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+    const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const { push, isReady, query } = useRouter();
     const { 
         currentLimit, 
@@ -24,7 +26,9 @@ const Category = () => {
         setURL, 
         handleChangePage, 
         handleChangeLimit, 
-        handleSearch 
+        handleSearch,
+        setSelectedId,
+        selectedId
     } = useCategory();
 
 
@@ -38,15 +42,20 @@ const Category = () => {
         (category: Record<string, unknown>, columnKey: Key) => {
             const cellValue = category[columnKey as keyof typeof category];
             switch (columnKey) {
-                // case "icon":
-                //     return (
-                //         <Image
-                //             src={`${cellValue}`}
-                //             alt="icon"
-                //             width={100}
-                //             height={200}
-                //         />
-                //     );
+                case "icon":
+    const iconUrl = `${cellValue}`;
+    const isValidUrl = iconUrl.startsWith("http") || iconUrl.startsWith("/");
+    
+    return isValidUrl ? (
+        <Image
+            src={iconUrl}
+            alt="icon"
+            width={100}
+            height={200}
+        />
+    ) : (
+        <span className="text-xs text-gray-400">No Icon</span>
+    );
                 case "actions":
                     return (
                         <Dropdown>
@@ -60,7 +69,10 @@ const Category = () => {
                                     <Dropdown.Item onPress={() => push(`/admin/category/${category._id}`)} >
                                         Detail Category
                                     </Dropdown.Item>
-                                    <Dropdown.Item className="text-danger" >
+                                    <Dropdown.Item className="text-danger" onPress={()=> {
+                                        setSelectedId(`${category._id}`);
+                                        setIsOpenDeleteModal(true);
+                                    }}>
                                         Delete
                                     </Dropdown.Item>
 
@@ -94,6 +106,13 @@ const Category = () => {
             <AddCategoryModal
                 isOpen={isOpenAddModal}
                 onOpenChange={setIsOpenAddModal}
+                refetchCategory={refetchCategory}
+            />
+            <DeleteCategoryModal
+                isOpen={isOpenDeleteModal}
+                onOpenChange={setIsOpenDeleteModal}
+                selectedId={selectedId}
+                setSelectedId={setSelectedId}
                 refetchCategory={refetchCategory}
             />
         </section>

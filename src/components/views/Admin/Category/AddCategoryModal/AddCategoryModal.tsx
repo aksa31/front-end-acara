@@ -7,7 +7,7 @@ import { useEffect } from "react";
 interface PropTypes {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    refetchCategory: () => void
+    refetchCategory: () => void;
 }
 
 const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) => {
