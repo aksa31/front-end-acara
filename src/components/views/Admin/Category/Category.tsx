@@ -16,16 +16,16 @@ const Category = () => {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const { push, isReady, query } = useRouter();
-    const { 
-        currentLimit, 
-        currentPage, 
-        dataCategory, 
-        isLoadingCategory, 
-        isRefetchingCategory, 
+    const {
+        currentLimit,
+        currentPage,
+        dataCategory,
+        isLoadingCategory,
+        isRefetchingCategory,
         refetchCategory,
-        setURL, 
-        handleChangePage, 
-        handleChangeLimit, 
+        setURL,
+        handleChangePage,
+        handleChangeLimit,
         handleSearch,
         setSelectedId,
         selectedId
@@ -69,7 +69,7 @@ const Category = () => {
                                     <Dropdown.Item onPress={() => push(`/admin/category/${category._id}`)} >
                                         Detail Category
                                     </Dropdown.Item>
-                                    <Dropdown.Item className="text-danger" onPress={()=> {
+                                    <Dropdown.Item className="text-danger" onPress={() => {
                                         setSelectedId(`${category._id}`);
                                         setIsOpenDeleteModal(true);
                                     }}>

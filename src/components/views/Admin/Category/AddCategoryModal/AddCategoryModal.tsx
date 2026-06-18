@@ -62,7 +62,7 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                                                 <Label>Name</Label>
                                                 <Input
                                                     {...field}
-                                                    className="focus-visible:border-primary"
+                                                    className="focus-visible:border-primary mb-2"
                                                     placeholder="Input Name Category"
                                                     type="text"
                                                     autoFocus
@@ -76,7 +76,7 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                                         control={control}
                                         render={({ field }) => (
                                             <TextField
-                                                className="w-full"
+                                                className="w-full mb-2"
                                                 name="description"
                                                 isInvalid={errors.description !== undefined}
                                             >

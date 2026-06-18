@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import { Button, Spinner } from "@heroui/react";
 import Image from "next/image";
-import { ChangeEvent, useEffect, useId, useRef, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useId, useRef, useState } from "react";
 import { CiSaveUp2, CiTrash } from "react-icons/ci";
 
 interface PropTypes {
@@ -15,6 +15,7 @@ interface PropTypes {
     preview?: string;
     isInvalid?: boolean;
     errorMessage?: string;
+    label?: ReactNode;
 }
 
 
@@ -28,7 +29,8 @@ const InputFile = ({
     isDeleting,
     onUpload,
     onDelete,
-    preview
+    preview,
+    label
 }: PropTypes) => {
     const [uploadedImage, setUploadedImage] = useState<File | null>(null);
     const drop = useRef<HTMLLabelElement>(null);
@@ -72,6 +74,7 @@ const InputFile = ({
 
     return (
         <div>
+            {label}
             <label
                 ref={drop}
                 htmlFor={`dropzone-file-${dropzoneId}`}
