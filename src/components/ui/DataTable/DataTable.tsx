@@ -3,27 +3,31 @@ import { Button, Input, Label, ListBox, Pagination, SearchField, Select, Spinner
 import { ChangeEvent, Key, ReactNode, useMemo } from "react";
 import PaginationWithEllipsis from "./Pagination";
 import { cn } from "@/utils/cn";
+import useChangeUrl from "@/hooks/useChangeUrl";
 
 interface PropTypes {
     buttonTopContentLabel?: string;
     columns: Record<string, unknown>[];
-    limit: number | string;
-    currentPage: number;
     totalPages: number;
     data: Record<string, unknown>[];
     isLoading?: boolean;
-    onChangeSearch: (value: string) => void;
-    onChangeLimit: (value: Key | Key[] | null) => void;
-    onChangePage: (page: number) => void;
+    emptyNotFound?: string;
     onClickButtonTopContent?: () => void;
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
 }
 const DataTable = (props: PropTypes) => {
-    const { buttonTopContentLabel, onClickButtonTopContent, isLoading, limit, onChangeLimit, columns, data, renderCell, totalPages, onChangePage, onChangeSearch, currentPage } = props;
+    const { buttonTopContentLabel, onClickButtonTopContent, isLoading, columns, data, renderCell, totalPages, emptyNotFound } = props;
+        const {
+            currentLimit,
+            currentPage,
+            handleChangePage,
+            handleChangeLimit,
+            handleSearch,
+        } = useChangeUrl();
     const topContent = useMemo(() => {
         return (
             <div className="flex items-start gap-y-4 justify-between py-2 lg:flex-row lg:items-center">
-                <SearchField className="w-full sm:max-w-[24%]" onChange={onChangeSearch}>
+                <SearchField className="w-full sm:max-w-[24%]" onChange={handleSearch}>
                     <SearchField.Group>
                         <SearchField.SearchIcon />
                         <SearchField.Input placeholder="Search by name" />
@@ -45,9 +49,9 @@ const DataTable = (props: PropTypes) => {
                 <Select
                     defaultValue={LIMIT_LISTS[0].value}
                     className="hidden max-w-36 h-10 lg:block"
-                    value={Number(limit)}
+                    value={Number(currentLimit)}
                     selectionMode="single"
-                    onChange={onChangeLimit}
+                    onChange={handleChangeLimit}
                 >
                     <Select.Trigger>
                         Show :&nbsp;
@@ -68,10 +72,10 @@ const DataTable = (props: PropTypes) => {
                         </ListBox>
                     </Select.Popover>
                 </Select>
-                <PaginationWithEllipsis currentPage={currentPage} total={totalPages} onChangePage={onChangePage} />
+                <PaginationWithEllipsis currentPage={Number(currentPage)} total={totalPages} onChangePage={handleChangePage} />
             </div>
         )
-    }, [limit, currentPage, totalPages, onChangeLimit, onChangePage])
+    }, [currentLimit, currentPage, totalPages, handleChangeLimit, handleChangePage])
 
     return (
         <>
@@ -89,7 +93,7 @@ const DataTable = (props: PropTypes) => {
                         </Table.Header>
                         <Table.Body
                             renderEmptyState={() => (
-                                <p className="text-center py-4">No Category Found.</p>
+                                <p className="text-center py-4">{emptyNotFound}</p>
                             )}>
                             {data.map((item) => (
                                 <Table.Row key={item.key as Key}>

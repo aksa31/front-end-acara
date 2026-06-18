@@ -1,31 +1,29 @@
 import DataTable from "@/components/ui/DataTable";
-import { Button, Dropdown, Pagination } from '@heroui/react';
+import { Button, Chip, Dropdown, Pagination } from '@heroui/react';
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect, useState } from "react";
 import { CiMenuKebab } from "react-icons/ci";
-import { COLUMN_LIST_CATEGORY } from "./Category.constant";
+import { COLUMN_LIST_EVENT } from "./Event.constant";
 import { LIMIT_LISTS } from "@/constants/list.constants";
-import useCategory from "./useCategory";
+import useEvent from "./useEvent"
 import InputFile from "@/components/ui/InputFile";
 import Toaster from "@/components/ui/Toaster";
-import AddCategoryModal from "./AddCategoryModal";
-import DeleteCategoryModal from "./DeleteCategoryModal";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import DropdownAction from "@/components/commons/DropdownAction";
 
-const Category = () => {
+const Event = () => {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
     const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
     const { push, isReady, query } = useRouter();
     const {
-        dataCategory,
-        isLoadingCategory,
-        isRefetchingCategory,
-        refetchCategory,
+        dataEvents,
+        isLoadingEvents,
+        isRefetchingEvents,
+        refetchEvents,
         setSelectedId,
         selectedId
-    } = useCategory();
+    } = useEvent();
 
     const { setUrl } = useChangeUrl();
     useEffect(() => {
@@ -34,10 +32,10 @@ const Category = () => {
         }
     }, [isReady])
     const renderCell = useCallback(
-        (category: Record<string, unknown>, columnKey: Key) => {
-            const cellValue = category[columnKey as keyof typeof category];
+        (event: Record<string, unknown>, columnKey: Key) => {
+            const cellValue = event[columnKey as keyof typeof event];
             switch (columnKey) {
-                case "icon":
+                case "banner":
                     const iconUrl = `${cellValue}`;
                     const isValidUrl = iconUrl.startsWith("http") || iconUrl.startsWith("/");
 
@@ -45,20 +43,27 @@ const Category = () => {
                         <Image
                             src={iconUrl}
                             alt="icon"
-                            width={100}
-                            height={200}
+                            width={200}
+                            height={100}
+                            className="w-36 aspect-video object-cover rounded-lg"
                         />
                     ) : (
                         <span className="text-xs text-gray-400">No Icon</span>
                     );
+                case "isPublish":
+                    return (
+                        <Chip color={cellValue === true ? "success" :"warning"} size="sm" variant="soft">
+                            {cellValue === true ? "published" : "Not Published"}
+                        </Chip>
+                    )
                 case "actions":
                     return (
-                        <DropdownAction
-                            onPressButtonDetail={() => push(`/admin/category/${category._id}`)}
-                            onPressButtonDelete={() => {
-                                setSelectedId(`${category._id}`);
-                                setIsOpenDeleteModal(true);
-                            }}
+                        <DropdownAction 
+                        onPressButtonDetail={() => push(`/admin/event/${event._id}`)} 
+                            onPressButtonDelete={() => { 
+                            setSelectedId(`${event._id}`); 
+                            setIsOpenDeleteModal(true);
+                            }} 
                         />
                     );
                 default:
@@ -70,17 +75,17 @@ const Category = () => {
         <section>
             {Object.keys(query).length > 0 && (
                 <DataTable
-                    columns={COLUMN_LIST_CATEGORY}
-                    data={dataCategory?.data || []}
-                    buttonTopContentLabel="Create Category"
-                    emptyNotFound="No Category Found"
+                    columns={COLUMN_LIST_EVENT}
+                    data={dataEvents?.data || []}
+                    buttonTopContentLabel="Create Event"
+                    emptyNotFound="No Event Found"
                     onClickButtonTopContent={() => setIsOpenAddModal(true)}
                     renderCell={renderCell}
-                    isLoading={isLoadingCategory || isRefetchingCategory}
+                    isLoading={isLoadingEvents || isRefetchingEvents}
                     totalPages={3}
                 />
             )}
-            <AddCategoryModal
+            {/* <AddEvents
                 isOpen={isOpenAddModal}
                 onOpenChange={setIsOpenAddModal}
                 refetchCategory={refetchCategory}
@@ -91,9 +96,9 @@ const Category = () => {
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
                 refetchCategory={refetchCategory}
-            />
+            /> */}
         </section>
     );
 };
 
-export default Category;
+export default Event;
