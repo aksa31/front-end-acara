@@ -1,16 +1,13 @@
 import DataTable from "@/components/ui/DataTable";
-import { Button, Chip, Dropdown, Pagination } from '@heroui/react';
+import { Chip } from '@heroui/react';
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Key, ReactNode, useCallback, useEffect, useState } from "react";
-import { CiMenuKebab } from "react-icons/ci";
 import { COLUMN_LIST_EVENT } from "./Event.constant";
-import { LIMIT_LISTS } from "@/constants/list.constants";
 import useEvent from "./useEvent"
-import InputFile from "@/components/ui/InputFile";
-import Toaster from "@/components/ui/Toaster";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import DropdownAction from "@/components/commons/DropdownAction";
+import AddEventModal from "./AddEventModal";
 
 const Event = () => {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -52,18 +49,18 @@ const Event = () => {
                     );
                 case "isPublish":
                     return (
-                        <Chip color={cellValue === true ? "success" :"warning"} size="sm" variant="soft">
+                        <Chip color={cellValue === true ? "success" : "warning"} size="sm" variant="soft">
                             {cellValue === true ? "published" : "Not Published"}
                         </Chip>
                     )
                 case "actions":
                     return (
-                        <DropdownAction 
-                        onPressButtonDetail={() => push(`/admin/event/${event._id}`)} 
-                            onPressButtonDelete={() => { 
-                            setSelectedId(`${event._id}`); 
-                            setIsOpenDeleteModal(true);
-                            }} 
+                        <DropdownAction
+                            onPressButtonDetail={() => push(`/admin/event/${event._id}`)}
+                            onPressButtonDelete={() => {
+                                setSelectedId(`${event._id}`);
+                                setIsOpenDeleteModal(true);
+                            }}
                         />
                     );
                 default:
@@ -85,17 +82,22 @@ const Event = () => {
                     totalPages={3}
                 />
             )}
+            <AddEventModal 
+            isOpen={isOpenAddModal}
+            onOpenChange={setIsOpenAddModal}
+            refetchEvents={refetchEvents}
+            />
             {/* <AddEvents
                 isOpen={isOpenAddModal}
                 onOpenChange={setIsOpenAddModal}
-                refetchCategory={refetchCategory}
+                refetchEvents={refetchEvents}
             />
             <DeleteCategoryModal
                 isOpen={isOpenDeleteModal}
                 onOpenChange={setIsOpenDeleteModal}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
-                refetchCategory={refetchCategory}
+                refetchEvents={refetchEvents}
             /> */}
         </section>
     );

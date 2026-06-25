@@ -17,7 +17,6 @@ const ActivationPage = (props: PropTypes) => {
 export async function getServerSideRendering(context: { query: { code: string } }) {
     try {
         const result = await authServices.activation({ code: context.query.code });
-        console.log(result.data.data)
         if (result.data.data) {
             return {
                 props: {
