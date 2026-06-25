@@ -8,6 +8,7 @@ import useEvent from "./useEvent"
 import useChangeUrl from "@/hooks/useChangeUrl";
 import DropdownAction from "@/components/commons/DropdownAction";
 import AddEventModal from "./AddEventModal";
+import DeleteCategoryModal from "./DeleteEventModal";
 
 const Event = () => {
     const [isOpenAddModal, setIsOpenAddModal] = useState(false);
@@ -92,13 +93,14 @@ const Event = () => {
                 onOpenChange={setIsOpenAddModal}
                 refetchEvents={refetchEvents}
             />
+            */}
             <DeleteCategoryModal
                 isOpen={isOpenDeleteModal}
                 onOpenChange={setIsOpenDeleteModal}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
                 refetchEvents={refetchEvents}
-            /> */}
+            /> 
         </section>
     );
 };
