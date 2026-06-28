@@ -142,10 +142,10 @@ const useAddEventModal = (onClose: () => void) => {
       isFeatured : Boolean(data.isFeatured),
       isPublished : Boolean(data.isPublished),
       isOnline : Boolean(data.isOnline),
-      startDate: toDateStandard(data.startDate),
-      endDate: toDateStandard(data.endDate),
+      startDate: data.startDate ? toDateStandard(data.startDate) : "",
+      endDate: data.endDate ? toDateStandard(data.endDate) : "",
       location: {
-        region: data.region,
+        region: data.region ? data.region : "",
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },
       banner: data.banner
@@ -174,6 +174,7 @@ const useAddEventModal = (onClose: () => void) => {
     regionInput,
 
     dataCategory,
+    setValue
   };
 };
 

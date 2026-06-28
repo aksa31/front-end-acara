@@ -171,7 +171,6 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                                     {...field}
                                                     className="w-full"
                                                     name="startDate"
-                                                    defaultValue={now(getLocalTimeZone())}
                                                     hideTimeZone
                                                         onChange={(val) => {
                                                             field.onChange(val ?? "");
@@ -259,7 +258,6 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                                     {...field}
                                                     className="w-full"
                                                     name="endDate"
-                                                    defaultValue={now(getLocalTimeZone())}
                                                     hideTimeZone
                                                         onChange={(val) => {
                                                             field.onChange(val ?? "");
