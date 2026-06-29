@@ -5,11 +5,11 @@ import Image from "next/image";
 import useCoverTab from "./useCoverTab";
 import { Controller } from "react-hook-form";
 import { useEffect } from "react";
-import { IEvent } from "@/types/Event";
+import { IEventForm } from "@/types/Event";
 
 interface PropTypes {
     currentCover: string;
-    onUpdate: (data: IEvent) => void;
+    onUpdate: (data: IEventForm) => void;
     isPendingUpdate: boolean;
     isSuccessUpdate: boolean;
 }

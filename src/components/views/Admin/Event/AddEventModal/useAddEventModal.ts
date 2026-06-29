@@ -10,7 +10,7 @@ import { DateValue, toast, Toast } from "@heroui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { now, getLocalTimeZone } from "@internationalized/date";
@@ -59,8 +59,10 @@ const useAddEventModal = (onClose: () => void) => {
   const preview = watch("banner");
   const fileUrl = getValues("banner");
 
-  setValue('startDate', now(getLocalTimeZone()))
-  setValue('endDate', now(getLocalTimeZone()))
+  useEffect(() => {
+    setValue("startDate", now(getLocalTimeZone()));
+    setValue("endDate", now(getLocalTimeZone()));
+  }, []);
 
   const handleUploadBanner = (
     files: FileList,
@@ -136,12 +138,11 @@ const useAddEventModal = (onClose: () => void) => {
   });
 
   const handleAddEvent = (data: IEventForm) => {
-    
     const payload = {
       ...data,
-      isFeatured : Boolean(data.isFeatured),
-      isPublished : Boolean(data.isPublished),
-      isOnline : Boolean(data.isOnline),
+      isFeatured: data.isFeatured === "true",
+        isPublished: data.isPublished === "true",
+        isOnline: data.isOnline === "true",
       startDate: data.startDate ? toDateStandard(data.startDate) : "",
       endDate: data.endDate ? toDateStandard(data.endDate) : "",
       location: {

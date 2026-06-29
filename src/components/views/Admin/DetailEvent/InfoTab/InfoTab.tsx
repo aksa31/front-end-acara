@@ -1,4 +1,4 @@
-import { IEvent } from "@/types/Event";
+import { IEventForm } from "@/types/Event";
 import { ICategory } from "@/types/Category";
 import { Button, Card, Input, Select, Skeleton, Label, TextField, FieldError, TextArea, Spinner, Autocomplete, SearchField, ListBox, useFilter, EmptyState, DatePicker, DateField, Calendar, TimeField } from "@heroui/react"
 import { Controller } from "react-hook-form";
@@ -10,8 +10,8 @@ import { DateValue, TimeValue } from "@heroui/react";
 import { toInputDate } from "@/utils/date";
 
 interface PropTypes {
-    dataEvent?: IEvent;
-    onUpdate: (data: IEvent) => void;
+    dataEvent?: IEventForm;
+    onUpdate: (data: IEventForm) => void;
     isPendingUpdate: boolean;
     isSuccessUpdate: boolean;
 }
@@ -33,8 +33,11 @@ const InfoTab = ({ dataEvent, onUpdate, isPendingUpdate, isSuccessUpdate }: Prop
             setValueUpdateInfo('description', `${dataEvent?.description}`)
             setValueUpdateInfo('slug', `${dataEvent?.slug}`)
             setValueUpdateInfo('category', `${dataEvent?.category}`)
-            setValueUpdateInfo('startDate', toInputDate(`${dataEvent?.startDate}`))
-            setValueUpdateInfo('endDate', toInputDate(`${dataEvent?.endDate}`))
+            const startDate = toInputDate(`${dataEvent?.startDate}`);
+        const endDate = toInputDate(`${dataEvent?.endDate}`);
+        
+        if (startDate) setValueUpdateInfo('startDate', startDate); 
+        if (endDate) setValueUpdateInfo('endDate', endDate); 
             setValueUpdateInfo('isPublished', `${dataEvent?.isPublished}`)
             setValueUpdateInfo('isFeatured', `${dataEvent?.isFeatured}`)
         }

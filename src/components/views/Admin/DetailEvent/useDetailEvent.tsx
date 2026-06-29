@@ -2,16 +2,14 @@ import useMediaHandling from "@/hooks/useMediaHandling";
 import categoryServices from "@/services/category.service";
 import eventServices from "@/services/event.service";
 import { ICategory } from "@/types/Category";
-import { IEvent } from "@/types/Event";
+import { IEvent, IEventForm } from "@/types/Event";
+import { toDateStandard } from "@/utils/date";
 import { toast } from "@heroui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import * as yup from 'yup';
-
-
-
 const useDetailEvent = () => {
     const { query, isReady } = useRouter();
 
@@ -46,7 +44,23 @@ const useDetailEvent = () => {
         },
     })
 
-    const handleUpdateEvent = (data: ICategory) => mutateUpdateEvent(data);
+    const handleUpdateEvent = (data: IEventForm) => {
+        const payload = {
+            ...data,
+            isFeatured: data.isFeatured === "true",
+            isPublished: data.isPublished === "true",
+            isOnline: data.isOnline === "true",
+            startDate: data.startDate ? toDateStandard(data.startDate) : "",
+            endDate: data.endDate ? toDateStandard(data.endDate) : "",
+            location: {
+                region: data.region ? data.region : "",
+                coordinates: [Number(data.latitude), Number(data.longitude)],
+            },
+            banner: data.banner
+        };
+        mutateUpdateEvent(payload);
+    };
+
 
     return {
         dataEvent,
