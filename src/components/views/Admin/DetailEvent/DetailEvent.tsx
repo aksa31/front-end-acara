@@ -1,6 +1,7 @@
 import { Tabs } from "@heroui/react";
 import CoverTab from "./CoverTab";
 import InfoTab from "./InfoTab";
+import LocationTab from "./LocationTab";
 import useDetailEvent from "./useDetailEvent";
 
 const DetailEvent = () => {
@@ -9,6 +10,11 @@ const DetailEvent = () => {
         handleUpdateEvent,
         isPendingUpdateEvent,
         isSuccessUpdateEvent,
+        handleUpdateLocation,
+        handleUpdateCover,
+
+        dataDefaultRegion,
+        isPendingDefaultRegion
     } = useDetailEvent();
     return (
         <Tabs className="w-full">
@@ -22,6 +28,10 @@ const DetailEvent = () => {
                         Info
                         <Tabs.Indicator />
                     </Tabs.Tab>
+                    <Tabs.Tab id="location">
+                        Location
+                        <Tabs.Indicator />
+                    </Tabs.Tab>
                 </Tabs.List>
             </Tabs.ListContainer>
             <Tabs.Panel className="pt-4" id="cover">
@@ -29,7 +39,7 @@ const DetailEvent = () => {
                     currentCover={dataEvent?.banner}
                     isPendingUpdate={isPendingUpdateEvent}
                     isSuccessUpdate={isSuccessUpdateEvent}
-                    onUpdate={handleUpdateEvent}
+                    onUpdate={handleUpdateCover}
                 />
             </Tabs.Panel>
             <Tabs.Panel className="pt-4" id="info">
@@ -38,6 +48,16 @@ const DetailEvent = () => {
                     isPendingUpdate={isPendingUpdateEvent}
                     isSuccessUpdate={isSuccessUpdateEvent}
                     onUpdate={handleUpdateEvent}
+                    />
+            </Tabs.Panel>
+            <Tabs.Panel className="pt-4" id="location">
+                <LocationTab
+                    dataLocation={dataEvent}
+                    isPendingUpdate={isPendingUpdateEvent}
+                    isSuccessUpdate={isSuccessUpdateEvent}
+                    onUpdate={handleUpdateLocation}
+                    dataDefaultRegion={dataDefaultRegion}
+                    isPendingDefaultRegion={isPendingDefaultRegion}
                 />
             </Tabs.Panel>
         </Tabs>

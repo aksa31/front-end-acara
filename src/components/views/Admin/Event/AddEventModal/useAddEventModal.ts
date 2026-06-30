@@ -15,7 +15,6 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { now, getLocalTimeZone } from "@internationalized/date";
 
-
 const schema = yup.object().shape({
   name: yup.string().required("Please input Name"),
   slug: yup.string().required("Please input Slug"),
@@ -25,7 +24,7 @@ const schema = yup.object().shape({
   isPublished: yup.string().required("Please select status"),
   isFeatured: yup.string().required("Please select featured"),
   description: yup.string().required("Please input Description "),
-  isOnline: yup.string().required("Please select onlne or offline "),
+  isOnline: yup.string().required("Please select online or offline "),
   region: yup.string().required("Please select region"),
   latitude: yup.number().required("Please input latitude coordinate"),
   longitude: yup.number().required("Please input longitude coordinate"),
@@ -35,7 +34,7 @@ const schema = yup.object().shape({
 const useAddEventModal = (onClose: () => void) => {
   const router = useRouter();
   const debounce = useDebounce();
-  const { 
+  const {
     isPendingUploadFile,
     isPendingDeleteFile,
     handleUploadFile,
@@ -97,14 +96,15 @@ const useAddEventModal = (onClose: () => void) => {
     enabled: router.isReady,
   });
 
-
-  const [ searchRegency, setSearchRegency ] = useState("");
+  const [searchRegency, setSearchRegency] = useState("");
   const [regionInput, setRegionInput] = useState("");
 
-  const { data: dataRegion} = useQuery({
+  const { data: dataRegion } = useQuery({
     queryKey: ["Region", searchRegency],
     queryFn: async () => {
-      const { data } = await eventServices.searchLocationByRegency(`${searchRegency}`);
+      const { data } = await eventServices.searchLocationByRegency(
+        `${searchRegency}`,
+      );
       return data.data;
     },
     enabled: searchRegency !== "",
@@ -112,8 +112,8 @@ const useAddEventModal = (onClose: () => void) => {
 
   const handleSearchRegion = (region: string) => {
     setRegionInput(region);
-    debounce(() => setSearchRegency(region), DELAY)
-  }
+    debounce(() => setSearchRegency(region), DELAY);
+  };
 
   const addEvent = async (payload: IEvent) => {
     const res = await eventServices.addEvent(payload);
@@ -128,7 +128,6 @@ const useAddEventModal = (onClose: () => void) => {
     mutationFn: addEvent,
     onError: (error) => {
       toast.danger(error.message);
-  
     },
     onSuccess: () => {
       toast.success("Event added successfully");
@@ -141,15 +140,15 @@ const useAddEventModal = (onClose: () => void) => {
     const payload = {
       ...data,
       isFeatured: data.isFeatured === "true",
-        isPublished: data.isPublished === "true",
-        isOnline: data.isOnline === "true",
+      isPublished: data.isPublished === "true",
+      isOnline: data.isOnline === "true",
       startDate: data.startDate ? toDateStandard(data.startDate) : "",
       endDate: data.endDate ? toDateStandard(data.endDate) : "",
       location: {
         region: data.region ? data.region : "",
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },
-      banner: data.banner
+      banner: data.banner,
     };
     mutateAddEvent(payload);
   };
@@ -175,7 +174,7 @@ const useAddEventModal = (onClose: () => void) => {
     regionInput,
 
     dataCategory,
-    setValue
+    setValue,
   };
 };
 

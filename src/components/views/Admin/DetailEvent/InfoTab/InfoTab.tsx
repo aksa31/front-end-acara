@@ -34,21 +34,14 @@ const InfoTab = ({ dataEvent, onUpdate, isPendingUpdate, isSuccessUpdate }: Prop
             setValueUpdateInfo('slug', `${dataEvent?.slug}`)
             setValueUpdateInfo('category', `${dataEvent?.category}`)
             const startDate = toInputDate(`${dataEvent?.startDate}`);
-        const endDate = toInputDate(`${dataEvent?.endDate}`);
-        
-        if (startDate) setValueUpdateInfo('startDate', startDate); 
-        if (endDate) setValueUpdateInfo('endDate', endDate); 
+            const endDate = toInputDate(`${dataEvent?.endDate}`);
+
+            if (startDate) setValueUpdateInfo('startDate', startDate);
+            if (endDate) setValueUpdateInfo('endDate', endDate);
             setValueUpdateInfo('isPublished', `${dataEvent?.isPublished}`)
             setValueUpdateInfo('isFeatured', `${dataEvent?.isFeatured}`)
         }
     }, [dataEvent, dataCategory])
-
-    useEffect(() => {
-        if (isSuccessUpdate) {
-            resetUpdateInfo();
-        }
-    }, [isSuccessUpdate])
-
 
     const { contains } = useFilter({ sensitivity: "base" });
 
@@ -396,7 +389,7 @@ const InfoTab = ({ dataEvent, onUpdate, isPendingUpdate, isSuccessUpdate }: Prop
                                                     name="isFeatured"
                                                     isInvalid={errorsUpdateInfo.isFeatured !== undefined}
                                                     value={field.value}
-    onChange={field.onChange}
+                                                    onChange={field.onChange}
                                                 >
                                                     <Label>Featured</Label>
                                                     <Select.Trigger>

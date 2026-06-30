@@ -16,7 +16,7 @@ const schemaUpdateInfo = yup.object().shape({
     isPublished: yup.string().required("Please select status"),
     isFeatured: yup.string().required("Please select featured"),
     description: yup.string().required("Please input Description "),
-    // isOnline: yup.string().required("Please select onlne or offline "),
+    // isOnline: yup.string().required("Please select online or offline "),
     // region: yup.string().required("Please select region"),
     // latitude: yup.number().required("Please input latitude coordinate"),
     // longitude: yup.number().required("Please input longitude coordinate"),
@@ -38,11 +38,11 @@ const useInfoTab = () => {
     const { data: dataCategory } = useQuery({
         queryKey: ["Categories"],
         queryFn: async () => {
-          const { data } = await categoryServices.getCategories();
-          return data.data;
+            const { data } = await categoryServices.getCategories();
+            return data.data;
         },
         enabled: router.isReady,
-      });
+    });
 
     return {
         controlUpdateInfo,
