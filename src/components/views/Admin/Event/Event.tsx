@@ -48,10 +48,10 @@ const Event = () => {
                     ) : (
                         <span className="text-xs text-gray-400">No Icon</span>
                     );
-                case "isPublish":
+                case "isPublished":
                     return (
                         <Chip color={cellValue === true ? "success" : "warning"} size="sm" variant="soft">
-                            {cellValue === true ? "published" : "Not Published"}
+                            {cellValue === true ? "Published" : "Not Published"}
                         </Chip>
                     )
                 case "actions":

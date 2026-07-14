@@ -35,9 +35,7 @@ const LocationTab = ({ dataLocation, onUpdate, isPendingUpdate, isSuccessUpdate,
 
     useEffect(() => {
         if (dataLocation) {
-            console.log('LocationTab useEffect triggered', dataLocation)
-            console.log('data location', dataLocation)
-            console.log('data default region', dataDefaultRegion)
+            setValueUpdateLocation('address', `${dataLocation?.location?.address}`)
             setValueUpdateLocation('isOnline', `${dataLocation?.isOnline}`)
             if (dataLocation?.location?.coordinates?.length) {
                 setValueUpdateLocation('latitude', Number(dataLocation.location.coordinates[0]))
@@ -64,6 +62,28 @@ const LocationTab = ({ dataLocation, onUpdate, isPendingUpdate, isSuccessUpdate,
                         <p className="text-sm font-medium text-default-700">Current Icon</p>
                         {dataLocation?.name ? (
                             <div>
+                                <div className="mt-2 flex flex-col gap-1">
+                                    <Controller
+                                        name="address"
+                                        control={controlUpdateLocation}
+                                        render={({ field }) => (
+                                            <TextField
+                                                className="w-full"
+                                                name="name"
+                                                isInvalid={errorsUpdateLocation.address !== undefined}
+                                            >
+                                                <Label>Address</Label>
+                                                <Input
+                                                    {...field}
+                                                    className="focus-visible:border-primary mb-2"
+                                                    placeholder="Input address Event"
+                                                    type="text"
+                                                />
+                                                <FieldError>{errorsUpdateLocation.address?.message}</FieldError>
+                                            </TextField>
+                                        )}
+                                    />
+                                </div>
                                 <div className="mt-2 flex flex-col gap-1">
                                     <Controller
                                         name="isOnline"
@@ -230,7 +250,6 @@ const LocationTab = ({ dataLocation, onUpdate, isPendingUpdate, isSuccessUpdate,
                                     <Skeleton className="h-4 w-16 rounded-md" />
                                     <Skeleton className="h-10 w-full rounded-md" />
                                 </div>
-
                                 <div className="flex flex-col gap-1">
                                     <Skeleton className="h-4 w-24 rounded-md" />
                                     <Skeleton className="h-20 w-full rounded-md" />

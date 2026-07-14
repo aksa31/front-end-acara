@@ -8,16 +8,16 @@ const COLUMN_LIST_EVENT = [
         uid: "name"
     },
     {
-        name: "Start Date",
+        name: "START DATE",
         uid: "startDate"
     },
     {
-        name: "End Date",
+        name: "END DATE",
         uid: "endDate"
     },
     {
         name: "STATUS",
-        uid: "isPublish"
+        uid: "isPublished"
     },
     {
         name: "ACTIONS",

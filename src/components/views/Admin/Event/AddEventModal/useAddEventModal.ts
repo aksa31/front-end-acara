@@ -29,6 +29,7 @@ const schema = yup.object().shape({
   latitude: yup.number().required("Please input latitude coordinate"),
   longitude: yup.number().required("Please input longitude coordinate"),
   banner: yup.mixed<FileList | string>().required("Please input Icon"),
+  address: yup.string().required("Please input Address"),
 });
 
 const useAddEventModal = (onClose: () => void) => {
@@ -139,12 +140,13 @@ const useAddEventModal = (onClose: () => void) => {
   const handleAddEvent = (data: IEventForm) => {
     const payload = {
       ...data,
-      isFeatured: data.isFeatured === "true",
-      isPublished: data.isPublished === "true",
-      isOnline: data.isOnline === "true",
+      // isFeatured: data.isFeatured === "true",
+      // isPublished: data.isPublished === "true",
+      // isOnline: data.isOnline === "true",
       startDate: data.startDate ? toDateStandard(data.startDate) : "",
       endDate: data.endDate ? toDateStandard(data.endDate) : "",
       location: {
+        address: `${data.address}`,
         region: data.region ? data.region : "",
         coordinates: [Number(data.latitude), Number(data.longitude)],
       },

@@ -13,6 +13,7 @@ import { DELAY } from '@/constants/list.constants';
 
 const schemaUpdateLocation = yup.object().shape({
     isOnline: yup.string().required("Please select online or offline "),
+    address: yup.string().required("Please input address"),
     region: yup.string().required("Please select region"),
     latitude: yup.number().required("Please input latitude coordinate"),
     longitude: yup.number().required("Please input longitude coordinate"),

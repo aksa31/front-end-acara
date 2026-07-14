@@ -50,7 +50,6 @@ const useInfoTab = () => {
         handleSubmitUpdateInfo,
         resetUpdateInfo,
         setValueUpdateInfo,
-
         dataCategory,
     }
 }

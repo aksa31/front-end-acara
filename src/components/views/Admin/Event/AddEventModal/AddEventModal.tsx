@@ -527,6 +527,26 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                         )}
                                     />
                                     <Controller
+                                        name="address"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <TextField
+                                                className="w-full"
+                                                name="address"
+                                                isInvalid={errors.address !== undefined}
+                                            >
+                                                <Label>Address</Label>
+                                                <Input
+                                                    {...field}
+                                                    className="focus-visible:border-primary"
+                                                    placeholder="Input Name Address"
+                                                    type="text"
+                                                />
+                                                <FieldError>{errors.address?.message}</FieldError>
+                                            </TextField>
+                                        )}
+                                    />
+                                    <Controller
                                         name="latitude"
                                         control={control}
                                         render={({ field }) => (
