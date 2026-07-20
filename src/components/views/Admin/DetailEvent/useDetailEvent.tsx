@@ -8,14 +8,14 @@ import { useRouter } from "next/router";
 const useDetailEvent = () => {
     const { query, isReady } = useRouter();
 
-    const getEventById = async (id: string) => {
-        const { data } = await eventServices.getEventById(id);
+    const getEventById = async () => {
+        const { data } = await eventServices.getEventById(`${query.id}`);
         return data.data;
     }
 
     const { data: dataEvent, refetch: refetchEvent } = useQuery({
         queryKey: ["Event"],
-        queryFn: () => getEventById(`${query.id}`),
+        queryFn: getEventById,
         enabled: isReady
     })
     const updateEvent = async (payload: IEvent) => {
@@ -54,11 +54,11 @@ const useDetailEvent = () => {
     };
 
     const handleUpdateCover = (data: IEventForm) => {
-    const payload = {
-        banner: data.banner,
+        const payload = {
+            banner: data.banner,
+        };
+        mutateUpdateEvent(payload);
     };
-    mutateUpdateEvent(payload);
-};
 
     const handleUpdateLocation = (data: IEventForm) => {
         const payload = {

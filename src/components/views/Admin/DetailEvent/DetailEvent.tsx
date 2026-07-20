@@ -3,6 +3,7 @@ import CoverTab from "./CoverTab";
 import InfoTab from "./InfoTab";
 import LocationTab from "./LocationTab";
 import useDetailEvent from "./useDetailEvent";
+import TicketTab from "./TicketTab";
 
 const DetailEvent = () => {
     const {
@@ -32,6 +33,10 @@ const DetailEvent = () => {
                         Location
                         <Tabs.Indicator />
                     </Tabs.Tab>
+                    <Tabs.Tab id="ticket">
+                        Ticket
+                        <Tabs.Indicator />
+                    </Tabs.Tab>
                 </Tabs.List>
             </Tabs.ListContainer>
             <Tabs.Panel className="pt-4" id="cover">
@@ -48,7 +53,7 @@ const DetailEvent = () => {
                     isPendingUpdate={isPendingUpdateEvent}
                     isSuccessUpdate={isSuccessUpdateEvent}
                     onUpdate={handleUpdateEvent}
-                    />
+                />
             </Tabs.Panel>
             <Tabs.Panel className="pt-4" id="location">
                 <LocationTab
@@ -58,6 +63,10 @@ const DetailEvent = () => {
                     onUpdate={handleUpdateLocation}
                     dataDefaultRegion={dataDefaultRegion}
                     isPendingDefaultRegion={isPendingDefaultRegion}
+                />
+            </Tabs.Panel>
+            <Tabs.Panel className="pt-4" id="ticket">
+                <TicketTab
                 />
             </Tabs.Panel>
         </Tabs>

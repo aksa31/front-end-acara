@@ -13,27 +13,31 @@ interface PropTypes {
     isLoading?: boolean;
     emptyNotFound?: string;
     onClickButtonTopContent?: () => void;
+    showSearch?: boolean;
+    showLimit?: boolean;
     renderCell: (item: Record<string, unknown>, columnKey: Key) => ReactNode;
 }
 const DataTable = (props: PropTypes) => {
-    const { buttonTopContentLabel, onClickButtonTopContent, isLoading, columns, data, renderCell, totalPages, emptyNotFound } = props;
-        const {
-            currentLimit,
-            currentPage,
-            handleChangePage,
-            handleChangeLimit,
-            handleSearch,
-        } = useChangeUrl();
+    const { buttonTopContentLabel, onClickButtonTopContent, isLoading, columns, data, renderCell, totalPages, emptyNotFound, showLimit = true, showSearch = true } = props;
+    const {
+        currentLimit,
+        currentPage,
+        handleChangePage,
+        handleChangeLimit,
+        handleSearch,
+    } = useChangeUrl();
     const topContent = useMemo(() => {
         return (
             <div className="flex items-start gap-y-4 justify-between py-2 lg:flex-row lg:items-center">
-                <SearchField className="w-full sm:max-w-[24%]" onChange={handleSearch}>
-                    <SearchField.Group>
-                        <SearchField.SearchIcon />
-                        <SearchField.Input placeholder="Search by name" />
-                        <SearchField.ClearButton />
-                    </SearchField.Group>
-                </SearchField>
+                {showSearch && (
+                    <SearchField className="w-full sm:max-w-[24%]" onChange={handleSearch}>
+                        <SearchField.Group>
+                            <SearchField.SearchIcon />
+                            <SearchField.Input placeholder="Search by name" />
+                            <SearchField.ClearButton />
+                        </SearchField.Group>
+                    </SearchField>
+                )}
                 {buttonTopContentLabel &&
                     <Button variant="danger" onPress={onClickButtonTopContent}>
                         {buttonTopContentLabel}
@@ -46,6 +50,8 @@ const DataTable = (props: PropTypes) => {
     const BottomContent = useMemo(() => {
         return (
             <div className="flex items-center justify-center px-2 py-2 lg:justify-between">
+                {showLimit && (
+
                 <Select
                     defaultValue={LIMIT_LISTS[0].value}
                     className="hidden max-w-36 h-10 lg:block"
@@ -72,6 +78,7 @@ const DataTable = (props: PropTypes) => {
                         </ListBox>
                     </Select.Popover>
                 </Select>
+                )}
                 <PaginationWithEllipsis currentPage={Number(currentPage)} total={totalPages} onChangePage={handleChangePage} />
             </div>
         )
@@ -107,11 +114,11 @@ const DataTable = (props: PropTypes) => {
 
                         </Table.Body>
                     </Table.Content>
-                            {isLoading && (
-                                <div className="absolute inset-0 z-10 flex items-center justify-center bg-foreground-700/30 backdrop-blur-sm rounded-lg">
-                                    <Spinner color="danger" />
-                                </div>
-                            )}
+                    {isLoading && (
+                        <div className="absolute inset-0 z-10 flex items-center justify-center bg-foreground-700/30 backdrop-blur-sm rounded-lg">
+                            <Spinner color="danger" />
+                        </div>
+                    )}
                 </Table.ScrollContainer>
             </Table>
             {BottomContent}

@@ -80,13 +80,13 @@ const Event = () => {
                     onClickButtonTopContent={() => setIsOpenAddModal(true)}
                     renderCell={renderCell}
                     isLoading={isLoadingEvents || isRefetchingEvents}
-                    totalPages={3}
+                    totalPages={dataEvents?.pagination.totalPages}
                 />
             )}
-            <AddEventModal 
-            isOpen={isOpenAddModal}
-            onOpenChange={setIsOpenAddModal}
-            refetchEvents={refetchEvents}
+            <AddEventModal
+                isOpen={isOpenAddModal}
+                onOpenChange={setIsOpenAddModal}
+                refetchEvents={refetchEvents}
             />
             {/* <AddEvents
                 isOpen={isOpenAddModal}
@@ -100,7 +100,7 @@ const Event = () => {
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
                 refetchEvents={refetchEvents}
-            /> 
+            />
         </section>
     );
 };
