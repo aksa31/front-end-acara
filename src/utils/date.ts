@@ -11,31 +11,24 @@ const standardTime = (time : number) => {
 
 const toDateStandard = (date: DateValue) => {
     const year = date.year;
-    const month = String(date.month).padStart(2, "0");
-    const day = String(date.day).padStart(2, "0");
+    const month = date.month;
+    const day = date.day;
     const hour = "hour" in date ? date.hour : 0;
     const minute = "minute" in date ? date.minute : 0;
     const second = "second" in date ? date.second : 0;
 
-    return `${year}-${month}-${day} ${standardTime(hour)}:${standardTime(minute)}:${standardTime(second)}`;
+    return `${standardTime(year)}-${standardTime(month)}-${standardTime(day)} ${standardTime(hour)}:${standardTime(minute)}:${standardTime(second)}`;
 };
 
 const toInputDate = (date: string) => {
-if (!date) return null;
+    if (!date) return null;
     
-    const normalized = date.replace(" ", "T");
-    const d = new Date(normalized);
-    
-    if (isNaN(d.getTime())) return null;
-    
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    const hours = String(d.getHours()).padStart(2, "0");
-    const minutes = String(d.getMinutes()).padStart(2, "0");
-    const seconds = String(d.getSeconds()).padStart(2, "0");
-    const iso = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}+07:00`;
-    return parseAbsoluteToLocal(iso);
+    try {
+        const formattedDate = parseAbsoluteToLocal(`${date.replace(" ", "T")}+07:00`);
+        return formattedDate;
+    } catch {
+        return null;
+    }
 };
 
 export { toDateStandard, toInputDate };
