@@ -1,6 +1,6 @@
 import DropdownAction from "@/components/commons/DropdownAction";
 import { Button, Card, Chip, useOverlayState } from "@heroui/react";
-import { Key, ReactNode, useCallback } from "react";
+import { Key, ReactNode, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
@@ -8,18 +8,20 @@ import DataTable from "@/components/ui/DataTable";
 import { COLUMN_LIST_TICKET } from "./TicketTab.constants";
 import useTicketTab from "./useTicketTab";
 import AddTicketModal from "./AddTicketModal";
+import DeleteTicketModal from "./DeleteTicketModal";
+import { ITicket } from "@/types/Ticket";
 
 const TicketTab = () => {
     const {
         dataTicket,
         refetchTicket,
         isPendingTicket,
-        isRefetchingTicket
+        isRefetchingTicket,
     } = useTicketTab();
     const addTicketModal = useOverlayState();
     const deleteTicketModal = useOverlayState();
     const updateTicketModal = useOverlayState();
-    const { push } = useRouter();
+    const [selectedDataTicket, setSelectedDataTicket] = useState<ITicket | null>(null)
 
     const renderCell = useCallback(
         (ticket: Record<string, unknown>, columnKey: Key) => {
@@ -34,6 +36,7 @@ const TicketTab = () => {
                                 updateTicketModal.open()
                             }}
                             onPressButtonDelete={() => {
+                                setSelectedDataTicket(ticket as ITicket);
                                 deleteTicketModal.open()
                             }}
                         />
@@ -76,6 +79,13 @@ const TicketTab = () => {
                 isOpen={addTicketModal.isOpen}
                 onOpenChange={(open) => addTicketModal.setOpen(open)}
                 refetchTicket={() => refetchTicket()}
+            />
+            <DeleteTicketModal
+                isOpen={deleteTicketModal.isOpen}
+                onOpenChange={(open) => deleteTicketModal.setOpen(open)}
+                refetchTicket={() => refetchTicket()}
+                setSelectedDataTicket={setSelectedDataTicket}
+                selectedDataTicket={selectedDataTicket}
             />
         </>
     )
