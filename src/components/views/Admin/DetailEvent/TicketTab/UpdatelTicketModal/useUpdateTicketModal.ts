@@ -8,62 +8,64 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-  name: yup.string().required("Please input Ticket Name "),
+  name: yup.string().required("Please input Name Category"),
   price: yup.string().required("Please input Price"),
   quantity: yup.string().required("Please input Quantity"),
-  description: yup.string().required("Please input Ticket Description "),
+  description: yup.string().required("Please input Description Category"),
 
 });
 
-const useAddTicketModal = (onClose: () => void) => {
+const useUpdateTicketModal = (id:string, onClose: () => void) => {
   const router = useRouter();
   const {
     control,
     handleSubmit: handleSubmitForm,
     formState: { errors },
     reset,
+    setValue: setValueUpdateTicket
   } = useForm({
     resolver: yupResolver(schema),
   });
 
 
-  const addTicket = async (payload: ITicket) => {
-    const res = await ticketServices.addTicket(payload);
+  const updateTicket = async (payload: ITicket) => {
+    const res = await ticketServices.updateTicket(id, payload);
     return res;
   };
 
   const {
-    mutate: mutateAddTicket,
-    isPending: isPendingAddTicket,
-    isSuccess: isSuccessAddTicket,
+    mutate: mutateUpdateTicket,
+    isPending: isPendingUpdateTicket,
+    isSuccess: isSuccessUpdateTicket,
   } = useMutation({
-    mutationFn: addTicket,
+    mutationFn: updateTicket,
     onError: (error) => {
       toast.danger(error.message);
     },
     onSuccess: () => {
-      toast.success("Ticket added successfully");
+      toast.success("Category updated successfully");
       reset();
       onClose();
     },
   });
 
-  const handleAddTicket = (data: ITicket) => {
+  const handleUpdateTicket = (data: ITicket) => {
     data.events = `${router.query.id}`;
     data.price = Number(data.price);
     data.quantity = Number(data.quantity);
-    mutateAddTicket(data);
+    mutateUpdateTicket(data);
   };
 
   return {
     control,
     errors,
     reset,
-    isPendingAddTicket,
-    isSuccessAddTicket,
+    isPendingUpdateTicket,
+    isSuccessUpdateTicket,
     handleSubmitForm,
-    handleAddTicket,
+    handleUpdateTicket,
+    setValueUpdateTicket
   };
 };
 
-export default useAddTicketModal;
+export default useUpdateTicketModal;
