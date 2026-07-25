@@ -1,32 +1,30 @@
-import categoryServices from "@/services/category.service";
+import bannerServices from "@/services/banner.service";
 import { toast } from "@heroui/react";
 import { useMutation } from "@tanstack/react-query";
 
-const useDeleteCategoryModal = (onClose: () => void) => {
-    const deleteCategory = async (id: string) => {
-        const res = await categoryServices.deleteCategory(id);
+const useDeleteBannerModal = (onClose: () => void) => {
+    const deleteBanner = async (id: string) => {
+        const res = await bannerServices.deleteBanner(id);
         return res;
     };
 
-    const { mutate: mutateDeleteCategory, isPending: isPendingDeleteCategory, isSuccess: isSuccessDeleteCategory } = useMutation({
-        mutationFn: deleteCategory,
+    const { mutate: mutateDeleteBanner, isPending: isPendingDeleteBanner, isSuccess: isSuccessDeleteBanner } = useMutation({
+        mutationFn: deleteBanner,
         onError: (error) => {
             toast.danger(error.message);
         },
         onSuccess: () => {
-            toast.success("Delete Category Success");
+            toast.success("Delete Banner Success");
             onClose();
         },
-        
-
     })
 
 
     return {
-        mutateDeleteCategory,
-        isPendingDeleteCategory,
-        isSuccessDeleteCategory
+        mutateDeleteBanner,
+        isPendingDeleteBanner,
+        isSuccessDeleteBanner
     }
 }
 
-export default useDeleteCategoryModal;
+export default useDeleteBannerModal;

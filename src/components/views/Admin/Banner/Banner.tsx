@@ -15,6 +15,7 @@ import useChangeUrl from "@/hooks/useChangeUrl";
 import DropdownAction from "@/components/commons/DropdownAction";
 import useBanner from "./useBanner";
 import AddBannerModal from "./AddBannerModal";
+import DeleteBannerModal from "./DeleteBannerModal/DeleteBannerModal";
 
 const Banner = () => {
     // coba ganti setovrlaystate liat dari ticket
@@ -95,18 +96,13 @@ const Banner = () => {
                 onOpenChange={setIsOpenAddModal}
                 refetchBanner={refetchBanner}
             />
-            {/* <AddCategoryModal
-                isOpen={isOpenAddModal}
-                onOpenChange={setIsOpenAddModal}
-                refetchCategory={refetchBanner}
-            />
-            <DeleteCategoryModal
+            <DeleteBannerModal
                 isOpen={isOpenDeleteModal}
                 onOpenChange={setIsOpenDeleteModal}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
-                refetchCategory={refetchBanner}
-            /> */}
+                refetchBanner={refetchBanner}
+            />
         </section>
     );
 };

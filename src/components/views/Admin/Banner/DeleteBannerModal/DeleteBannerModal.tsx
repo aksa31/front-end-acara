@@ -1,24 +1,24 @@
 import { Button, Modal, Spinner } from "@heroui/react";
 import { Dispatch, SetStateAction, useEffect } from "react";
-import useDeleteCategoryModal from "./useDeleteBannerModal";
+import useDeleteBannerModal from "./useDeleteBannerModal";
 
 interface PropTypes {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    refetchCategory: () => void;
+    refetchBanner: () => void;
     selectedId: string;
     setSelectedId: Dispatch<SetStateAction<string>>;
 }
 
 
 
-const DeleteCategoryModal = ({ isOpen, onOpenChange, refetchCategory, setSelectedId, selectedId }: PropTypes) => {
-    const { mutateDeleteCategory, isPendingDeleteCategory, isSuccessDeleteCategory } = useDeleteCategoryModal(() => onOpenChange(false));
+const DeleteBannerModal = ({ isOpen, onOpenChange, refetchBanner, setSelectedId, selectedId }: PropTypes) => {
+    const { mutateDeleteBanner, isPendingDeleteBanner, isSuccessDeleteBanner } = useDeleteBannerModal(() => onOpenChange(false));
     useEffect(() => {
-        if (isSuccessDeleteCategory) {
-            refetchCategory();
+        if (isSuccessDeleteBanner) {
+            refetchBanner();
         }
-    }, [isSuccessDeleteCategory])
+    }, [isSuccessDeleteBanner])
     return (
         <Modal >
             <Modal.Backdrop className="bg-black/80" isOpen={isOpen} onOpenChange={onOpenChange} >
@@ -28,16 +28,16 @@ const DeleteCategoryModal = ({ isOpen, onOpenChange, refetchCategory, setSelecte
                         // onPress={() => handleOnClose()}
                         />
                         <Modal.Header>
-                            <Modal.Heading className="m-2 font-bold">Delete Category</Modal.Heading>
+                            <Modal.Heading className="m-2 font-bold">Delete Banner</Modal.Heading>
                         </Modal.Header>
                         <Modal.Body >
-                            <p className="text-md text-black">Are you sure you want to delete this category?</p>
+                            <p className="text-md text-black">Are you sure you want to delete this banner?</p>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button
                                 className="bg-red-200 text-red-700 font-semibold"
                                 onPress={() => setSelectedId("")}
-                                isDisabled={isPendingDeleteCategory}
+                                isDisabled={isPendingDeleteBanner}
                                 slot="close"
                             >
                                 Cancel
@@ -45,15 +45,15 @@ const DeleteCategoryModal = ({ isOpen, onOpenChange, refetchCategory, setSelecte
                             <Button
                                 variant="danger"
                                 type="submit"
-                                form="add-category-form"
-                                isDisabled={isPendingDeleteCategory}
-                                onPress={() => mutateDeleteCategory(selectedId)}
+                                form="add-banner-form"
+                                isDisabled={isPendingDeleteBanner}
+                                onPress={() => mutateDeleteBanner(selectedId)}
                                 className="font-semibold"
                             >
-                                {isPendingDeleteCategory ? (
+                                {isPendingDeleteBanner ? (
                                     <Spinner size="sm" color="current" />
                                 ) : (
-                                    "Delete Category"
+                                    "Delete Banner"
                                 )}
                             </Button>
                         </Modal.Footer>
@@ -64,4 +64,4 @@ const DeleteCategoryModal = ({ isOpen, onOpenChange, refetchCategory, setSelecte
     )
 };
 
-export default DeleteCategoryModal;
+export default DeleteBannerModal;
