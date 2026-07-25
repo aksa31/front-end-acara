@@ -14,6 +14,7 @@ import DeleteCategoryModal from "./DeleteBannerModal";
 import useChangeUrl from "@/hooks/useChangeUrl";
 import DropdownAction from "@/components/commons/DropdownAction";
 import useBanner from "./useBanner";
+import AddBannerModal from "./AddBannerModal";
 
 const Banner = () => {
     // coba ganti setovrlaystate liat dari ticket
@@ -49,6 +50,7 @@ const Banner = () => {
                             alt="image"
                             width={100}
                             height={200}
+                            className="rounded-lg"
                         />
                     ) : (
                         <span className="text-xs text-gray-400">No Image</span>
@@ -88,6 +90,11 @@ const Banner = () => {
                     totalPages={dataBanner?.pagination.totalPages}
                 />
             )}
+            <AddBannerModal
+                isOpen={isOpenAddModal}
+                onOpenChange={setIsOpenAddModal}
+                refetchBanner={refetchBanner}
+            />
             {/* <AddCategoryModal
                 isOpen={isOpenAddModal}
                 onOpenChange={setIsOpenAddModal}

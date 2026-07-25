@@ -1,5 +1,5 @@
-import { Button, Label, Modal, TextField, Input, FieldError, TextArea, Spinner } from "@heroui/react";
-import useAddCategoryModal from "./useAddBannerModal";
+import { Button, Label, Modal, TextField, Input, FieldError, TextArea, Spinner, Select, ListBox } from "@heroui/react";
+import useAddBannerModal from "./useAddBannerModal";
 import { Controller } from "react-hook-form";
 import InputFile from "@/components/ui/InputFile";
 import { useEffect } from "react";
@@ -7,35 +7,35 @@ import { useEffect } from "react";
 interface PropTypes {
     isOpen: boolean;
     onOpenChange: (isOpen: boolean) => void;
-    refetchCategory: () => void;
+    refetchBanner: () => void;
 }
 
-const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) => {
+const AddBannerModal = ({ isOpen, onOpenChange, refetchBanner }: PropTypes) => {
     const {
         control,
         errors,
-        isPendingAddCategory,
+        isPendingAddBanner,
         isPendingUploadFile,
         preview,
-        isSuccessAddCategory,
-        handleUploadIcon,
-        handleAddCategory,
+        isSuccessAddBanner,
+        handleUploadImage,
+        handleAddBanner,
         handleSubmitForm,
-        handleDeleteIcon,
+        handleDeleteImage,
         isPendingDeleteFile,
         handleOnClose
-    } = useAddCategoryModal(() => onOpenChange(false));
+    } = useAddBannerModal(() => onOpenChange(false));
 
-    const disabledSubmit = 
-        isPendingAddCategory ||
+    const disabledSubmit =
+        isPendingAddBanner ||
         isPendingUploadFile ||
         isPendingDeleteFile
 
     useEffect(() => {
-        if (isSuccessAddCategory) {
-            refetchCategory();
+        if (isSuccessAddBanner) {
+            refetchBanner();
         }
-    }, [isSuccessAddCategory])
+    }, [isSuccessAddBanner])
 
     return (
         <Modal >
@@ -44,68 +44,89 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                     <Modal.Dialog >
                         <Modal.CloseTrigger onPress={() => handleOnClose()} />
                         <Modal.Header>
-                            <Modal.Heading className="m-2 font-bold">Add Category</Modal.Heading>
+                            <Modal.Heading className="m-2 font-bold">Add Banner</Modal.Heading>
                         </Modal.Header>
                         <Modal.Body >
-                            <form id="add-category-form" onSubmit={handleSubmitForm(handleAddCategory)}>
+                            <form id="add-banner-form" onSubmit={handleSubmitForm(handleAddBanner)}>
                                 <div className="flex flex-col gap-4 m-2">
                                     <p className="text-sm font-bold text-black">Information</p>
                                     <Controller
-                                        name="name"
+                                        name="title"
                                         control={control}
                                         render={({ field }) => (
                                             <TextField
                                                 className="w-full"
                                                 name="name"
-                                                isInvalid={errors.name !== undefined}
+                                                isInvalid={errors.title !== undefined}
                                             >
-                                                <Label>Name</Label>
+                                                <Label>Title</Label>
                                                 <Input
                                                     {...field}
                                                     className="focus-visible:border-primary mb-2"
-                                                    placeholder="Input Name Category"
+                                                    placeholder="Input title"
                                                     type="text"
                                                     autoFocus
                                                 />
-                                                <FieldError>{errors.name?.message}</FieldError>
+                                                <FieldError>{errors.title?.message}</FieldError>
                                             </TextField>
                                         )}
                                     />
                                     <Controller
-                                        name="description"
+                                        name="isShow"
                                         control={control}
                                         render={({ field }) => (
                                             <TextField
-                                                className="w-full mb-2"
-                                                name="description"
-                                                isInvalid={errors.description !== undefined}
+                                                className="w-full"
+                                                name="isShow"
+                                                isInvalid={errors.isShow !== undefined}
                                             >
-                                                <Label>Description</Label>
-                                                <TextArea
+                                                <Select
                                                     {...field}
-                                                    className="focus-visible:border-primary"
-                                                    placeholder="Input Description"
-                                                />
-                                                <FieldError>{errors.description?.message}</FieldError>
+                                                    placeholder="Select one"
+                                                    name="isShow"
+                                                    isInvalid={errors.isShow !== undefined}
+                                                    value={field.value === true ? 'true' : field.value === false ? 'false' : null}
+                                                    onChange={(key) => {
+                                                        field.onChange(key === 'true');
+                                                    }}
+                                                    >
+                                                    <Label>Status</Label>
+                                                    <Select.Trigger>
+                                                        <Select.Value />
+                                                        <Select.Indicator />
+                                                    </Select.Trigger>
+                                                    <Select.Popover>
+                                                        <ListBox>
+                                                            <ListBox.Item id="true" textValue="true">
+                                                                Showing
+                                                                <ListBox.ItemIndicator />
+                                                            </ListBox.Item>
+                                                            <ListBox.Item id="false" textValue="false">
+                                                                Not Showing
+                                                                <ListBox.ItemIndicator />
+                                                            </ListBox.Item>
+                                                        </ListBox>
+                                                    </Select.Popover>
+                                                </Select>
+                                                <FieldError>{errors.isShow?.message}</FieldError>
                                             </TextField>
                                         )}
                                     />
-                                    <p className="text-sm font-bold">Icon</p>
+                                    <p className="text-sm font-bold">Image</p>
                                     <Controller
-                                        name="icon"
+                                        name="image"
                                         control={control}
                                         render={({ field: { onChange, value, ...field } }) => (
                                             <InputFile
                                                 isDropable
                                                 {...field}
-                                                onDelete={() => handleDeleteIcon(onChange)}
-                                                onUpload={(files) => handleUploadIcon(files, onChange)}
+                                                onDelete={() => handleDeleteImage(onChange)}
+                                                onUpload={(files) => handleUploadImage(files, onChange)}
                                                 isUploading={isPendingUploadFile}
                                                 isDeleting={isPendingDeleteFile}
-                                                isInvalid={errors.icon !== undefined}
-                                                errorMessage={errors.icon?.message}
-                                                preview={typeof preview === 'string'? preview : ""}
-                                                
+                                                isInvalid={errors.image !== undefined}
+                                                errorMessage={errors.image?.message}
+                                                preview={typeof preview === 'string' ? preview : ""}
                                             />
                                         )}
                                     />
@@ -124,14 +145,14 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
                             <Button
                                 variant="danger"
                                 type="submit"
-                                form="add-category-form"
+                                form="add-banner-form"
                                 isDisabled={disabledSubmit}
                                 className="font-semibold"
                             >
-                                {isPendingAddCategory ? (
+                                {isPendingAddBanner ? (
                                     <Spinner size="sm" color="current" />
                                 ) : (
-                                    "Create Category"
+                                    "Create Banner"
                                 )}
                             </Button>
                         </Modal.Footer>
@@ -142,4 +163,4 @@ const AddCategoryModal = ({ isOpen, onOpenChange, refetchCategory }: PropTypes) 
     )
 }
 
-export default AddCategoryModal;
+export default AddBannerModal;
