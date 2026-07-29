@@ -36,14 +36,14 @@ const useDetailCategory = () => {
 
     const handleUpdateCategory = (data: ICategory) => mutateUpdateCategory(data);
 
-    const getCategoryById = async (id: string) => {
-        const { data } = await categoryServices.getCategoryById(id);
+    const getCategoryById = async () => {
+        const { data } = await categoryServices.getCategoryById(`${query.id}`);
         return data.data;
     }
 
     const { data: dataCategory, refetch: refetchCategory } = useQuery({
         queryKey: ["Category"],
-        queryFn: () => getCategoryById(`${query.id}`),
+        queryFn: getCategoryById,
         enabled: isReady
     })
 

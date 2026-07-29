@@ -1,16 +1,16 @@
 import DashboardLayout from "@/components/layouts/DashboardLayout";
-import DetailCategory from "@/components/views/Admin/DetailCategory";
+import DetailBanner from "@/components/views/Admin/DetailBanner";
 
-const AdminDetailCategoryPage = () => {
+const AdminDetailBannerPage = () => {
     return (
         <DashboardLayout
-            title="Detail Category"
-            description="Manage information for this category."
+            title="Detail Banner"
+            description="Manage information for this banner."
             type="admin"
         >
-            <DetailCategory />
+            <DetailBanner />
         </DashboardLayout>
     )
 }
 
-export default AdminDetailCategoryPage;
+export default AdminDetailBannerPage;

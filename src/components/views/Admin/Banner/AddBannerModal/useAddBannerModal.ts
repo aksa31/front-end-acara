@@ -10,7 +10,7 @@ import * as yup from "yup";
 const schema = yup.object().shape({
   title: yup.string().required("Please input title"),
   image: yup.mixed<FileList | string>().required("Please input image"),
-  isShow: yup.boolean().required("Please select isShow"),
+  isShow: yup.string().required("Please select show status"),
 });
 
 const useAddBannerModal = (onClose: () => void) => {

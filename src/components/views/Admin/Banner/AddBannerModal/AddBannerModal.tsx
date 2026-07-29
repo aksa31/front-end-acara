@@ -85,10 +85,6 @@ const AddBannerModal = ({ isOpen, onOpenChange, refetchBanner }: PropTypes) => {
                                                     placeholder="Select one"
                                                     name="isShow"
                                                     isInvalid={errors.isShow !== undefined}
-                                                    value={field.value === true ? 'true' : field.value === false ? 'false' : null}
-                                                    onChange={(key) => {
-                                                        field.onChange(key === 'true');
-                                                    }}
                                                     >
                                                     <Label>Status</Label>
                                                     <Select.Trigger>
