@@ -2,6 +2,8 @@ import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Button } from "@heroui/react";
 import PageHead from "@/components/commons/PageHead";
+import LandingPageLayout from "@/components/layouts/LandingPageLayout";
+import Home from "@/components/views/Home";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,16 +15,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default function Home() {
+const HomePage= () => {
   return (
-    <div
-      className={`${geistSans.className} ${geistMono.className} flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black`}
-    >
-      <PageHead />
-      Hello World
-      <Button>
-        My Button
-      </Button>
-    </div>
+    <LandingPageLayout title='Home'>
+      <Home/>
+    </LandingPageLayout>
   );
 }
+
+export default HomePage;
