@@ -9,7 +9,7 @@ interface PropTypes {
 
 const Activation = (props: PropTypes) => {
     const router = useRouter();
-    const {status} = props;
+    const { status } = props;
     return (
         <div className="flex w-screen flex-col items-center justify-center gap-10 p-4">
             <div className="flex flex-col items-center justify-center gap-10">
@@ -29,12 +29,12 @@ const Activation = (props: PropTypes) => {
                 />
             </div>
             <div className="flex flex-col items-center gap-2 text-center">
-                <h1 className="text-3xl font-bold text-red-500">
+                <h1 className="text-2xl font-bold text-red-500">
                     {status === 'success' ? "Activation Success" : "Activation Failed"}
                 </h1>
                 <p className="text-xl font-bold text-gray-500">
                     {status === 'success' ? "Thank you for reegister account in Acara" : "Confirmation is invalid"}
-                    </p>
+                </p>
                 <Link href="/">
                     <Button variant="outline" size="lg" className="mt-4 w-fit border-red-500 text-red-500 rounded-lg" onPress={() => router.push('/')}>
                         Back To Home

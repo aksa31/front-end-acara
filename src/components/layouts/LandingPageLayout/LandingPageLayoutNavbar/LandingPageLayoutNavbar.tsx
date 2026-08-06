@@ -73,7 +73,7 @@ const LandingPageLayoutNavbar = ({
     return (
         <>
             <nav className={cn(
-                "max-w-screen-3xl 3xl:container border border-solid flex justify-between px-6",
+                " border border-solid flex justify-between px-6",
                 isHidden && "-translate-y-full"
             )}>
                 <header className="flex h-16 items-center">
@@ -204,57 +204,57 @@ const LandingPageLayoutNavbar = ({
                         ))}
                         {session.status === "authenticated" ? (
                             <>
-                            <li>
-                                <Link 
-                                href={"/admin/dashboard"}
-                                className={cn(
-                                        "font-medium text-default-700 hover:text-red-600 no-underline",
-                                        {
-                                            "hidden": dataProfile?.role !== 'admin',
-                                        }
-                                    )}
-                                >
-                                    Admin
-                                </Link>
-                            </li>
-                            <li>
-                                <Link 
-                                href={"/member/profile"}
-                                className={cn(
-                                        "font-medium text-default-700 hover:text-red-600 no-underline",
-                                    )}
-                                >
-                                    Profile
-                                </Link>
-                            </li>
-                            <li>
-                                <Button variant="danger" onPress={() => signOut()} className="mt-2 w-full" size="md">
-                                    Sign Out
-                                </Button>
-                            </li>
+                                <li>
+                                    <Link
+                                        href={"/admin/dashboard"}
+                                        className={cn(
+                                            "font-medium text-default-700 hover:text-red-600 no-underline",
+                                            {
+                                                "hidden": dataProfile?.role !== 'admin',
+                                            }
+                                        )}
+                                    >
+                                        Admin
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href={"/member/profile"}
+                                        className={cn(
+                                            "font-medium text-default-700 hover:text-red-600 no-underline",
+                                        )}
+                                    >
+                                        Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Button variant="danger" onPress={() => signOut()} className="mt-2 w-full" size="md">
+                                        Sign Out
+                                    </Button>
+                                </li>
                             </>
                         ) : (
                             <>
-                            {BUTTON_ITEMS.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    className={cn(
-                                        "font-medium hover:text-red-600 no-underline px-4 py-2 rounded-lg text-center w-full flex justify-center",
-                                        {
-                                            'border  border-red-600 text-red-600': item.variant === 'dashed',
-                                            'bg-red-500 text-white': item.variant === 'solid',
-                                        },
-                                        {
-                                            "font-bold text-red-500": router.pathname === item.href,
-                                        }
-                                    )}
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
+                                {BUTTON_ITEMS.map((item) => (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        className={cn(
+                                            "font-medium hover:text-red-600 no-underline px-4 py-2 rounded-lg text-center w-full flex justify-center",
+                                            {
+                                                'border  border-red-600 text-red-600': item.variant === 'dashed',
+                                                'bg-red-500 text-white': item.variant === 'solid',
+                                            },
+                                            {
+                                                "font-bold text-red-500": router.pathname === item.href,
+                                            }
+                                        )}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                ))}
                             </>
-                    )}
+                        )}
                     </ul>
                 </div>
             )}

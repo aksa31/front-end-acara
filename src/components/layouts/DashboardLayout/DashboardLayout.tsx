@@ -28,7 +28,7 @@ const DashboardLayout = ({ children, title, description, type = 'admin' }: PropT
                 />
                 <div className="h-screen w-full overflow-y-auto p-8">
                     <nav className="flex justify-between bg-transparent px-0">
-                        <h1 className="text-3xl font-bold">{title}</h1>
+                        <h1 className="text-2xl font-bold">{title}</h1>
                         <button
                             aria-label={open ? "Close Menu" : "Open Menu"}
                             onClick={() => setOpen(!open)}

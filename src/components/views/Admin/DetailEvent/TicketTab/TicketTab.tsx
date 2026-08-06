@@ -72,7 +72,7 @@ const TicketTab = () => {
                         isLoading={isPendingTicket || isRefetchingTicket}
                         showSearch={false}
                         showLimit={false}
-                        totalPages={dataTicket?.pagination.totalPages}
+                        totalPages={dataTicket?.pagination?.totalPages}
                     />
                 </Card.Content>
             </Card>

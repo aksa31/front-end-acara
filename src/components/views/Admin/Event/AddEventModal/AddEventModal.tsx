@@ -28,6 +28,7 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
         handleDeleteBanner,
         isPendingDeleteFile,
         handleOnClose,
+        setValue,
 
         handleSearchRegion,
         searchRegency,
@@ -41,6 +42,11 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
         isPendingAddEvent ||
         isPendingUploadFile ||
         isPendingDeleteFile
+
+    useEffect(() => {
+        setValue("startDate", now(getLocalTimeZone()));
+        setValue("endDate", now(getLocalTimeZone()));
+    }, [onOpenChange]);
 
     useEffect(() => {
         if (isSuccessAddEvent) {
@@ -161,85 +167,85 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                         control={control}
                                         render={({ field }) => {
                                             return (
-                                                
-                                            <TextField
-                                                className="w-full"
-                                                name="startDate"
-                                                isInvalid={errors.startDate !== undefined}
-                                            >
-                                                <DatePicker
-                                                    {...field}
+
+                                                <TextField
                                                     className="w-full"
                                                     name="startDate"
-                                                    hideTimeZone
+                                                    isInvalid={errors.startDate !== undefined}
+                                                >
+                                                    <DatePicker
+                                                        {...field}
+                                                        className="w-full"
+                                                        name="startDate"
+                                                        hideTimeZone
                                                         onChange={(val) => {
                                                             field.onChange(val ?? "");
                                                         }}
-                                                    isInvalid={errors.startDate !== undefined}
-                                                >
-                                                    <Label>Start Date</Label>
-                                                    <DateField.Group fullWidth>
-                                                        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
-                                                        <DateField.Suffix>
-                                                            <DatePicker.Trigger>
-                                                                <DatePicker.TriggerIndicator />
-                                                            </DatePicker.Trigger>
-                                                        </DateField.Suffix>
-                                                    </DateField.Group>
-                                                    <DatePicker.Popover>
-                                                        <Calendar aria-label="Event start date">
-                                                            <Calendar.Header>
-                                                                <Calendar.YearPickerTrigger>
-                                                                    <Calendar.YearPickerTriggerHeading />
-                                                                    <Calendar.YearPickerTriggerIndicator />
-                                                                </Calendar.YearPickerTrigger>
-                                                                <Calendar.NavButton slot="previous" />
-                                                                <Calendar.NavButton slot="next" />
-                                                            </Calendar.Header>
-                                                            <Calendar.Grid>
-                                                                <Calendar.GridHeader>
-                                                                    {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-                                                                </Calendar.GridHeader>
-                                                                <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
-                                                            </Calendar.Grid>
-                                                            <Calendar.YearPickerGrid>
-                                                                <Calendar.YearPickerGridBody>
-                                                                    {({ year }) => <Calendar.YearPickerCell year={year} />}
-                                                                </Calendar.YearPickerGridBody>
-                                                            </Calendar.YearPickerGrid>
-                                                        </Calendar>
-                                                        <div className="flex items-center justify-between">
-                                                            <Label>Time</Label>
-                                                            <TimeField
-                                                                aria-label="Time"
-                                                                granularity="minute"
-                                                                hideTimeZone
-                                                                hourCycle={12}
-                                                                name="time"
-                                                                value={timeValue}
-                                                                onChange={(v) => {
-                                                                    setTimeValue(v as TimeValue);
-                                                                    if (field.value && "set" in field.value) {
-                                                                        const combined = field.value.set({
-                                                                            hour: v?.hour ?? 0,
-                                                                            minute: v?.minute ?? 0,
-                                                                            second: 0,
-                                                                        });
-                                                                        field.onChange(combined ?? "");
-                                                                    }
-                                                                }}
-                                                            >
-                                                                <TimeField.Group variant="secondary">
-                                                                    <TimeField.Input>
-                                                                        {(segment) => <TimeField.Segment segment={segment} />}
-                                                                    </TimeField.Input>
-                                                                </TimeField.Group>
-                                                            </TimeField>
-                                                        </div>
-                                                    </DatePicker.Popover>
-                                                </DatePicker>
-                                                <FieldError>{errors.startDate?.message}</FieldError>
-                                            </TextField>
+                                                        isInvalid={errors.startDate !== undefined}
+                                                    >
+                                                        <Label>Start Date</Label>
+                                                        <DateField.Group fullWidth>
+                                                            <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+                                                            <DateField.Suffix>
+                                                                <DatePicker.Trigger>
+                                                                    <DatePicker.TriggerIndicator />
+                                                                </DatePicker.Trigger>
+                                                            </DateField.Suffix>
+                                                        </DateField.Group>
+                                                        <DatePicker.Popover>
+                                                            <Calendar aria-label="Event start date">
+                                                                <Calendar.Header>
+                                                                    <Calendar.YearPickerTrigger>
+                                                                        <Calendar.YearPickerTriggerHeading />
+                                                                        <Calendar.YearPickerTriggerIndicator />
+                                                                    </Calendar.YearPickerTrigger>
+                                                                    <Calendar.NavButton slot="previous" />
+                                                                    <Calendar.NavButton slot="next" />
+                                                                </Calendar.Header>
+                                                                <Calendar.Grid>
+                                                                    <Calendar.GridHeader>
+                                                                        {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                                                                    </Calendar.GridHeader>
+                                                                    <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
+                                                                </Calendar.Grid>
+                                                                <Calendar.YearPickerGrid>
+                                                                    <Calendar.YearPickerGridBody>
+                                                                        {({ year }) => <Calendar.YearPickerCell year={year} />}
+                                                                    </Calendar.YearPickerGridBody>
+                                                                </Calendar.YearPickerGrid>
+                                                            </Calendar>
+                                                            <div className="flex items-center justify-between">
+                                                                <Label>Time</Label>
+                                                                <TimeField
+                                                                    aria-label="Time"
+                                                                    granularity="minute"
+                                                                    hideTimeZone
+                                                                    hourCycle={12}
+                                                                    name="time"
+                                                                    value={timeValue}
+                                                                    onChange={(v) => {
+                                                                        setTimeValue(v as TimeValue);
+                                                                        if (field.value && "set" in field.value) {
+                                                                            const combined = field.value.set({
+                                                                                hour: v?.hour ?? 0,
+                                                                                minute: v?.minute ?? 0,
+                                                                                second: 0,
+                                                                            });
+                                                                            field.onChange(combined ?? "");
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <TimeField.Group variant="secondary">
+                                                                        <TimeField.Input>
+                                                                            {(segment) => <TimeField.Segment segment={segment} />}
+                                                                        </TimeField.Input>
+                                                                    </TimeField.Group>
+                                                                </TimeField>
+                                                            </div>
+                                                        </DatePicker.Popover>
+                                                    </DatePicker>
+                                                    <FieldError>{errors.startDate?.message}</FieldError>
+                                                </TextField>
                                             )
                                         }}
                                     />
@@ -248,89 +254,89 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                         control={control}
                                         render={({ field }) => {
                                             return (
-                                                
-                                            <TextField
-                                                className="w-full"
-                                                name="endDate"
-                                                isInvalid={errors.endDate !== undefined}
-                                            >
-                                                <DatePicker
-                                                    {...field}
+
+                                                <TextField
                                                     className="w-full"
                                                     name="endDate"
-                                                    hideTimeZone
+                                                    isInvalid={errors.endDate !== undefined}
+                                                >
+                                                    <DatePicker
+                                                        {...field}
+                                                        className="w-full"
+                                                        name="endDate"
+                                                        hideTimeZone
                                                         onChange={(val) => {
                                                             field.onChange(val ?? "");
                                                         }}
-                                                    isInvalid={errors.endDate !== undefined}
-                                                >
-                                                    <Label>End Date</Label>
-                                                    <DateField.Group fullWidth>
-                                                        <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
-                                                        <DateField.Suffix>
-                                                            <DatePicker.Trigger>
-                                                                <DatePicker.TriggerIndicator />
-                                                            </DatePicker.Trigger>
-                                                        </DateField.Suffix>
-                                                    </DateField.Group>
-                                                    <DatePicker.Popover>
-                                                        <Calendar aria-label="Event end date">
-                                                            <Calendar.Header>
-                                                                <Calendar.YearPickerTrigger>
-                                                                    <Calendar.YearPickerTriggerHeading />
-                                                                    <Calendar.YearPickerTriggerIndicator />
-                                                                </Calendar.YearPickerTrigger>
-                                                                <Calendar.NavButton slot="previous" />
-                                                                <Calendar.NavButton slot="next" />
-                                                            </Calendar.Header>
-                                                            <Calendar.Grid>
-                                                                <Calendar.GridHeader>
-                                                                    {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
-                                                                </Calendar.GridHeader>
-                                                                <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
-                                                            </Calendar.Grid>
-                                                            <Calendar.YearPickerGrid>
-                                                                <Calendar.YearPickerGridBody>
-                                                                    {({ year }) => <Calendar.YearPickerCell year={year} />}
-                                                                </Calendar.YearPickerGridBody>
-                                                            </Calendar.YearPickerGrid>
-                                                        </Calendar>
-                                                        <div className="flex items-center justify-between">
-                                                            <Label>Time</Label>
-                                                            <TimeField
-                                                                aria-label="Time"
-                                                                granularity="minute"
-                                                                hideTimeZone
-                                                                hourCycle={12}
-                                                                name="time"
-                                                                value={timeValue}
-                                                                onChange={(v) => {
-                                                                    setTimeValue(v as TimeValue);
-                                                                    if (field.value && "set" in field.value) {
-                                                                        const combined = field.value.set({
-                                                                            hour: v?.hour ?? 0,
-                                                                            minute: v?.minute ?? 0,
-                                                                            second: 0,
-                                                                        });
-                                                                        field.onChange(combined ?? "");
-                                                                    }
-                                                                }}
-                                                            >
-                                                                <TimeField.Group variant="secondary">
-                                                                    <TimeField.Input>
-                                                                        {(segment) => <TimeField.Segment segment={segment} />}
-                                                                    </TimeField.Input>
-                                                                </TimeField.Group>
-                                                            </TimeField>
-                                                        </div>
-                                                    </DatePicker.Popover>
-                                                </DatePicker>
-                                                <FieldError>{errors.endDate?.message}</FieldError>
-                                            </TextField>
+                                                        isInvalid={errors.endDate !== undefined}
+                                                    >
+                                                        <Label>End Date</Label>
+                                                        <DateField.Group fullWidth>
+                                                            <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+                                                            <DateField.Suffix>
+                                                                <DatePicker.Trigger>
+                                                                    <DatePicker.TriggerIndicator />
+                                                                </DatePicker.Trigger>
+                                                            </DateField.Suffix>
+                                                        </DateField.Group>
+                                                        <DatePicker.Popover>
+                                                            <Calendar aria-label="Event end date">
+                                                                <Calendar.Header>
+                                                                    <Calendar.YearPickerTrigger>
+                                                                        <Calendar.YearPickerTriggerHeading />
+                                                                        <Calendar.YearPickerTriggerIndicator />
+                                                                    </Calendar.YearPickerTrigger>
+                                                                    <Calendar.NavButton slot="previous" />
+                                                                    <Calendar.NavButton slot="next" />
+                                                                </Calendar.Header>
+                                                                <Calendar.Grid>
+                                                                    <Calendar.GridHeader>
+                                                                        {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+                                                                    </Calendar.GridHeader>
+                                                                    <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
+                                                                </Calendar.Grid>
+                                                                <Calendar.YearPickerGrid>
+                                                                    <Calendar.YearPickerGridBody>
+                                                                        {({ year }) => <Calendar.YearPickerCell year={year} />}
+                                                                    </Calendar.YearPickerGridBody>
+                                                                </Calendar.YearPickerGrid>
+                                                            </Calendar>
+                                                            <div className="flex items-center justify-between">
+                                                                <Label>Time</Label>
+                                                                <TimeField
+                                                                    aria-label="Time"
+                                                                    granularity="minute"
+                                                                    hideTimeZone
+                                                                    hourCycle={12}
+                                                                    name="time"
+                                                                    value={timeValue}
+                                                                    onChange={(v) => {
+                                                                        setTimeValue(v as TimeValue);
+                                                                        if (field.value && "set" in field.value) {
+                                                                            const combined = field.value.set({
+                                                                                hour: v?.hour ?? 0,
+                                                                                minute: v?.minute ?? 0,
+                                                                                second: 0,
+                                                                            });
+                                                                            field.onChange(combined ?? "");
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <TimeField.Group variant="secondary">
+                                                                        <TimeField.Input>
+                                                                            {(segment) => <TimeField.Segment segment={segment} />}
+                                                                        </TimeField.Input>
+                                                                    </TimeField.Group>
+                                                                </TimeField>
+                                                            </div>
+                                                        </DatePicker.Popover>
+                                                    </DatePicker>
+                                                    <FieldError>{errors.endDate?.message}</FieldError>
+                                                </TextField>
                                             )
                                         }}
                                     />
-                                   
+
                                     <Controller
                                         name="isPublished"
                                         control={control}
@@ -405,43 +411,7 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                             </TextField>
                                         )}
                                     />
-                                    <Controller
-                                        name="isOnline"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                className="w-full"
-                                                name="isOnline"
-                                                isInvalid={errors.isOnline !== undefined}
-                                            >
-                                                <Select
-                                                    {...field}
-                                                    placeholder="Select one"
-                                                    name="isOnline"
-                                                    isInvalid={errors.isOnline !== undefined}
-                                                >
-                                                    <Label>Event Type</Label>
-                                                    <Select.Trigger>
-                                                        <Select.Value />
-                                                        <Select.Indicator />
-                                                    </Select.Trigger>
-                                                    <Select.Popover>
-                                                        <ListBox>
-                                                            <ListBox.Item id="true" textValue="true">
-                                                                Online
-                                                                <ListBox.ItemIndicator />
-                                                            </ListBox.Item>
-                                                            <ListBox.Item id="false" textValue="false">
-                                                                Offline
-                                                                <ListBox.ItemIndicator />
-                                                            </ListBox.Item>
-                                                        </ListBox>
-                                                    </Select.Popover>
-                                                </Select>
-                                                <FieldError>{errors.isOnline?.message}</FieldError>
-                                            </TextField>
-                                        )}
-                                    />
+
                                     <Controller
                                         name="description"
                                         control={control}
@@ -462,133 +432,169 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                         )}
                                     />
 
-                                    <p className="text-sm font-bold">Location</p>
+                                    <p className="text-sm font-bold text-black">Location</p>
                                     <div className="mb-4 flex flex-col gap-4">
-
-                                    <Controller
-                                        name="region"
-                                        control={control}
-                                        render={({ field: { onChange, ...field } }) => (
-                                            <div className="flex flex-col gap-1">
+                                        <Controller
+                                            name="isOnline"
+                                            control={control}
+                                            render={({ field }) => (
                                                 <TextField
                                                     className="w-full"
-                                                    name="region"
-                                                    isInvalid={errors.region !== undefined}
-                                                    >
-                                                    <Label>City</Label>
-                                                    <Autocomplete
+                                                    name="isOnline"
+                                                    isInvalid={errors.isOnline !== undefined}
+                                                >
+                                                    <Select
                                                         {...field}
-                                                        value={field.value}
-                                                        onChange={(val) => onChange(val ?? "")}
-                                                        fullWidth
-                                                        placeholder="Search city"
-                                                        allowsEmptyCollection
+                                                        placeholder="Select one"
+                                                        name="isOnline"
+                                                        isInvalid={errors.isOnline !== undefined}
+                                                    >
+                                                        <Label>Event Type</Label>
+                                                        <Select.Trigger>
+                                                            <Select.Value />
+                                                            <Select.Indicator />
+                                                        </Select.Trigger>
+                                                        <Select.Popover>
+                                                            <ListBox>
+                                                                <ListBox.Item id="true" textValue="true">
+                                                                    Online
+                                                                    <ListBox.ItemIndicator />
+                                                                </ListBox.Item>
+                                                                <ListBox.Item id="false" textValue="false">
+                                                                    Offline
+                                                                    <ListBox.ItemIndicator />
+                                                                </ListBox.Item>
+                                                            </ListBox>
+                                                        </Select.Popover>
+                                                    </Select>
+                                                    <FieldError>{errors.isOnline?.message}</FieldError>
+                                                </TextField>
+                                            )}
+                                        />
+                                        <Controller
+                                            name="region"
+                                            control={control}
+                                            render={({ field: { onChange, ...field } }) => (
+                                                <div className="flex flex-col gap-1">
+                                                    <TextField
+                                                        className="w-full"
+                                                        name="region"
                                                         isInvalid={errors.region !== undefined}
                                                     >
-                                                        <Autocomplete.Trigger>
-                                                            <Autocomplete.Value />
-                                                            {/* <Autocomplete.ClearButton /> */}
-                                                            <Autocomplete.Indicator />
-                                                        </Autocomplete.Trigger>
-                                                        <Autocomplete.Popover>
-                                                            <Autocomplete.Filter
-                                                                filter={contains}
-                                                                inputValue={regionInput}
-                                                                onInputChange={(search) => {
-                                                                    handleSearchRegion(search);
-                                                                }}
-                                                            >
-                                                                <SearchField name="search" variant="secondary">
-                                                                    <SearchField.Group>
-                                                                        <SearchField.SearchIcon />
-                                                                        <SearchField.Input placeholder="Search..." />
-                                                                    </SearchField.Group>
-                                                                </SearchField>
-                                                                <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
-                                                                    {dataRegion && searchRegency !== "" ? 
-                                                                        dataRegion?.map((region: IRegency) => (
-                                                                            <ListBox.Item
-                                                                                key={region.id}
-                                                                                id={region.id}
-                                                                                textValue={region.name}
-                                                                            >
-                                                                                {region.name}
-                                                                                <ListBox.ItemIndicator />
-                                                                            </ListBox.Item>
-                                                                        ))
-                                                                     :[]}
-                                                                </ListBox>
-                                                            </Autocomplete.Filter>
-                                                        </Autocomplete.Popover>
-                                                    </Autocomplete>
-                                                    <FieldError>{errors.region?.message}</FieldError>
+                                                        <Label>City</Label>
+                                                        <Autocomplete
+                                                            {...field}
+                                                            value={field.value}
+                                                            onChange={(val) => onChange(val ?? "")}
+                                                            fullWidth
+                                                            placeholder="Search city"
+                                                            allowsEmptyCollection
+                                                            isInvalid={errors.region !== undefined}
+                                                        >
+                                                            <Autocomplete.Trigger>
+                                                                <Autocomplete.Value />
+                                                                {/* <Autocomplete.ClearButton /> */}
+                                                                <Autocomplete.Indicator />
+                                                            </Autocomplete.Trigger>
+                                                            <Autocomplete.Popover>
+                                                                <Autocomplete.Filter
+                                                                    filter={contains}
+                                                                    inputValue={regionInput}
+                                                                    onInputChange={(search) => {
+                                                                        handleSearchRegion(search);
+                                                                    }}
+                                                                >
+                                                                    <SearchField name="search" variant="secondary">
+                                                                        <SearchField.Group>
+                                                                            <SearchField.SearchIcon />
+                                                                            <SearchField.Input placeholder="Search..." />
+                                                                        </SearchField.Group>
+                                                                    </SearchField>
+                                                                    <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
+                                                                        {dataRegion && searchRegency !== "" ?
+                                                                            dataRegion?.map((region: IRegency) => (
+                                                                                <ListBox.Item
+                                                                                    key={region.id}
+                                                                                    id={region.id}
+                                                                                    textValue={region.name}
+                                                                                >
+                                                                                    {region.name}
+                                                                                    <ListBox.ItemIndicator />
+                                                                                </ListBox.Item>
+                                                                            ))
+                                                                            : []}
+                                                                    </ListBox>
+                                                                </Autocomplete.Filter>
+                                                            </Autocomplete.Popover>
+                                                        </Autocomplete>
+                                                        <FieldError>{errors.region?.message}</FieldError>
+                                                    </TextField>
+                                                </div>
+                                            )}
+                                        />
+                                        <Controller
+                                            name="address"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <TextField
+                                                    className="w-full"
+                                                    name="address"
+                                                    isInvalid={errors.address !== undefined}
+                                                >
+                                                    <Label>Address</Label>
+                                                    <Input
+                                                        {...field}
+                                                        className="focus-visible:border-primary"
+                                                        placeholder="Input Name Address"
+                                                        type="text"
+                                                    />
+                                                    <FieldError>{errors.address?.message}</FieldError>
                                                 </TextField>
-                                            </div>
-                                        )}
-                                    />
-                                    <Controller
-                                        name="address"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                className="w-full"
-                                                name="address"
-                                                isInvalid={errors.address !== undefined}
-                                            >
-                                                <Label>Address</Label>
-                                                <Input
-                                                    {...field}
-                                                    className="focus-visible:border-primary"
-                                                    placeholder="Input Name Address"
-                                                    type="text"
-                                                />
-                                                <FieldError>{errors.address?.message}</FieldError>
-                                            </TextField>
-                                        )}
-                                    />
-                                    <Controller
-                                        name="latitude"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                className="w-full"
-                                                name="latitude"
-                                                isInvalid={errors.latitude !== undefined}
-                                            >
-                                                <Label>Latitude</Label>
-                                                <Input
-                                                    {...field}
-                                                    className="focus-visible:border-primary"
-                                                    placeholder="Input Name Event"
-                                                    type="text"
-                                                />
-                                                <FieldError>{errors.latitude?.message}</FieldError>
-                                            </TextField>
-                                        )}
-                                    />
-                                    <Controller
-                                        name="longitude"
-                                        control={control}
-                                        render={({ field }) => (
-                                            <TextField
-                                                className="w-full"
-                                                name="longitude"
-                                                isInvalid={errors.longitude !== undefined}
-                                            >
-                                                <Label>Longitude</Label>
-                                                <Input
-                                                    {...field}
-                                                    className="focus-visible:border-primary"
-                                                    placeholder="Input Name Event"
-                                                    type="text"
-                                                />
-                                                <FieldError>{errors.longitude?.message}</FieldError>
-                                            </TextField>
-                                        )}
-                                    />
+                                            )}
+                                        />
+                                        <Controller
+                                            name="latitude"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <TextField
+                                                    className="w-full"
+                                                    name="latitude"
+                                                    isInvalid={errors.latitude !== undefined}
+                                                >
+                                                    <Label>Latitude</Label>
+                                                    <Input
+                                                        {...field}
+                                                        className="focus-visible:border-primary"
+                                                        placeholder="Input Name Event"
+                                                        type="text"
+                                                    />
+                                                    <FieldError>{errors.latitude?.message}</FieldError>
+                                                </TextField>
+                                            )}
+                                        />
+                                        <Controller
+                                            name="longitude"
+                                            control={control}
+                                            render={({ field }) => (
+                                                <TextField
+                                                    className="w-full"
+                                                    name="longitude"
+                                                    isInvalid={errors.longitude !== undefined}
+                                                >
+                                                    <Label>Longitude</Label>
+                                                    <Input
+                                                        {...field}
+                                                        className="focus-visible:border-primary"
+                                                        placeholder="Input Name Event"
+                                                        type="text"
+                                                    />
+                                                    <FieldError>{errors.longitude?.message}</FieldError>
+                                                </TextField>
+                                            )}
+                                        />
                                     </div>
 
-                                    <p className="text-sm font-bold">Cover</p>
+                                    <p className="text-sm font-bold text-black">Cover</p>
                                     <Controller
                                         name="banner"
                                         control={control}

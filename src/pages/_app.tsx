@@ -1,3 +1,4 @@
+import { onErrorHandler } from "@/libs/axios/responseHandler";
 import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
 import { Toast } from "@heroui/react";
@@ -17,6 +18,13 @@ const queryClient = new QueryClient({
     queries: {
       refetchOnWindowFocus: false,
       retry: false,
+      throwOnError(error) {
+        onErrorHandler(error)
+        return false;
+      },
+    },
+    mutations: {
+      onError: onErrorHandler
     }
   }
 });
@@ -24,12 +32,12 @@ const queryClient = new QueryClient({
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
         <Toast.Provider placement="bottom end" />
-          <main className={cn(inter.className)}>
-            <Component {...pageProps} />
-          </main>
-        </QueryClientProvider>
-      </SessionProvider>
+        <main className={cn(inter.className)}>
+          <Component {...pageProps} />
+        </main>
+      </QueryClientProvider>
+    </SessionProvider>
   );
 }
