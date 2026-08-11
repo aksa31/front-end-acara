@@ -9,7 +9,7 @@ interface PropTypes {
     isLoading: boolean;
 }
 
-const HomeList = ({ title, events, isLoading }: PropTypes) => {
+const HomeEventList = ({ title, events, isLoading }: PropTypes) => {
     return (
         <section className="mb-16">
             <div className="mb-1 flex items-center justify-between px-6 ">
@@ -40,4 +40,4 @@ const HomeList = ({ title, events, isLoading }: PropTypes) => {
     )
 }
 
-export default HomeList;
+export default HomeEventList;
