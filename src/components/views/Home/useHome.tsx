@@ -13,7 +13,7 @@ const useHome = () => {
     };
 
     const { data: dataBanners, isLoading: isLoadingBanners } = useQuery({
-        queryKey: ["Banners"],
+        queryKey: ["Banners", "home", LIMIT_CATEGORY, DEFAULT_PAGE],
         queryFn: () => getBanners(),
         enabled: true,
     });
@@ -26,7 +26,7 @@ const useHome = () => {
     };
 
     const { data: dataCategories, isLoading: isLoadingCategories } = useQuery({
-        queryKey: ["Categories"],
+        queryKey: ["Categories", "home", LIMIT_BANNER, DEFAULT_PAGE],
         queryFn: () => getCategories(),
         enabled: true,
     });

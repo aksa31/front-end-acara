@@ -7,8 +7,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
-    category: yup.string().required("Please select Category"),
-    isPublished: yup.string().required("Please select status"),
+    category: yup.string(),
+    isOnline: yup.string(),
     isFeatured: yup.string().required("Please select featured"),
 });
 
@@ -26,7 +26,7 @@ const useEventFilter = () => {
         reValidateMode: "onChange",
     });
 
-    const { data: dataCategory } = useQuery({
+    const { data: dataCategory, isSuccess: isSuccessGetCategory, isLoading: isLoadingCategory } = useQuery({
         queryKey: ["Categories"],
         queryFn: async () => {
             const { data } = await categoryServices.getCategories();
@@ -36,7 +36,10 @@ const useEventFilter = () => {
 
     return {
         control,
-        dataCategory
+        dataCategory,
+        isSuccessGetCategory,
+        isLoadingCategory,
+        setValue
     };
 }
 

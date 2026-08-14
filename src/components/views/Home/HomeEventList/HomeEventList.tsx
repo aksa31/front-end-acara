@@ -7,14 +7,15 @@ interface PropTypes {
     title: string;
     events: IEvent[];
     isLoading: boolean;
+    urlMore?: string;
 }
 
-const HomeEventList = ({ title, events, isLoading }: PropTypes) => {
+const HomeEventList = ({ title, events, isLoading, urlMore }: PropTypes) => {
     return (
-        <section className="mb-16">
+        <section className="mb-8">
             <div className="mb-1 flex items-center justify-between px-6 ">
                 <h2 className="text-2xl font-bold text-danger">{title}</h2>
-                <Link href="/event" className="font-semibold text-gray-600">
+                <Link href={urlMore || "/event"} className="font-semibold text-gray-600">
                     See More
                 </Link>
             </div>

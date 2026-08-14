@@ -16,7 +16,7 @@ const HomeCategoryList = ({ categories, isLoading }: PropTypes) => {
             </Card.Header>
             <Card.Content className="mt-4 p-0">
                 <div className="grid auto-cols-[8rem] grid-flow-col gap-4 overflow-x-auto lg:grid-cols-8 lg:overflow-visible">
-                    {!isLoading ? (
+                    {!isLoading && categories ? (
                         categories?.map((category) => (
                             <Link href={`/event?category=${category._id}`} key={`category-${category._id}`} className="flex aspect-square cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border p-4">
                                 <Image

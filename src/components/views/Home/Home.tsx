@@ -10,7 +10,7 @@ const Home = () => {
     return (
         <div>
             <HomeSlider banners={dataBanners?.data} isLoadingBanners={isLoadingBanners} />
-            <HomeEventList title="Featured Events" events={dataFeaturedEvents?.data} isLoading={isLoadingFeaturedEvents} />
+            <HomeEventList title="Featured Events" events={dataFeaturedEvents?.data} isLoading={isLoadingFeaturedEvents} urlMore="/event?isFeatured=true"/>
             {!isLoadingBanners ? (
                 <div className="mx-6">
                     <Image
@@ -28,7 +28,7 @@ const Home = () => {
                     </Skeleton>
                 </div>
             )}
-            <HomeEventList title="Latest Events" events={dataLatestEvents?.data} isLoading={isLoadingLatestEvents} />
+            <HomeEventList title="Latest Events" events={dataLatestEvents?.data} isLoading={isLoadingLatestEvents}  />
             <HomeCategoryList categories={dataCategories?.data} isLoading={isLoadingCategories} />
         </div>
     )

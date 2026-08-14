@@ -147,7 +147,7 @@ const AddEventModal = ({ isOpen, onOpenChange, refetchEvents }: PropTypes) => {
                                                                     </SearchField.Group>
                                                                 </SearchField>
                                                                 <ListBox renderEmptyState={() => <EmptyState>No results found</EmptyState>}>
-                                                                    {dataCategory.map((category: ICategory) => (
+                                                                    {dataCategory?.map((category: ICategory) => (
                                                                         <ListBox.Item key={category._id} id={category._id} textValue={category.name}>
                                                                             {category.name}
                                                                             <ListBox.ItemIndicator />
