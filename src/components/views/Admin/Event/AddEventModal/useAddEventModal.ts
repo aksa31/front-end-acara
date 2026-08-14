@@ -13,7 +13,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { now, getLocalTimeZone } from "@internationalized/date";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please input Name"),

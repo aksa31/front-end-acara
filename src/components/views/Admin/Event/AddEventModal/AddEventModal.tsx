@@ -6,7 +6,7 @@ import { Key, useEffect, useState } from "react";
 import { ICategory } from "@/types/Category";
 import { IEvent, IRegency } from "@/types/Event";
 import { now, getLocalTimeZone } from "@internationalized/date";
-import { DateValue, TimeValue } from "@heroui/react";
+import {  TimeValue } from "@heroui/react";
 
 interface PropTypes {
     isOpen: boolean;
