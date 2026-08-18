@@ -1,5 +1,5 @@
 import { cn } from "@/utils/cn";
-import { Avatar, Button, CloseButton, Dropdown, Input, Label, Link } from "@heroui/react"
+import { Avatar, Button, CloseButton, Dropdown, EmptyState, Input, Label, Link, ListBox, Spinner } from "@heroui/react"
 import Image from "next/image"
 import { useState, useEffect, ReactNode } from "react";
 import { BUTTON_ITEMS, NAV_ITEMS } from "../LandingPageLayout.constants";
@@ -11,6 +11,8 @@ import { GiEarbuds } from "react-icons/gi";
 import { BsPersonSlash } from "react-icons/bs";
 import { FaArrowUpRightFromSquare } from "react-icons/fa6";
 import useLandingPageLayoutNavbar from "./useLandingPageLayoutNavbar";
+import { IEvent } from "@/types/Event";
+
 
 interface NavbarItem {
     label: string;
@@ -66,8 +68,15 @@ const LandingPageLayoutNavbar = ({
     const router = useRouter();
     const isHidden = useScrollDirection();
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
-    const { dataProfile } = useLandingPageLayoutNavbar();
+    const {
+        dataProfile,
+        dataEventsSearch,
+        isLoadingEventsSearch,
+        isRefetchingEventsSearch,
+        handleSearch,
+        search,
+        setSearch
+    } = useLandingPageLayoutNavbar();
 
 
     return (
@@ -108,13 +117,47 @@ const LandingPageLayoutNavbar = ({
                     </ul>
                 </header>
                 <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-2 hidden lg:flex ">
-                        <Input value={value} onChange={(e) => setValue(e.target.value)} className="w-[300px]" placeholder="Search Event" />
-                        {value && (
-                            <CloseButton
-                                aria-label="Clear"
-                                onPress={() => setValue("")}
+                    <div className="relative">
+                        <div className="flex items-center gap-2 hidden lg:flex ">
+                            <Input
+                                value={search}
+                                onChange={handleSearch}
+                                className="w-[300px]"
+                                placeholder="Search Event"
                             />
+                            {search && (
+                                <CloseButton
+                                    aria-label="Clear"
+                                    onPress={() => setSearch("")}
+                                />
+                            )}
+                        </div>
+                        {search !== "" && (
+                            <ListBox
+                                items={(dataEventsSearch?.data ?? []).map((item: IEvent) => ({
+                                    ...item,
+                                    id: item._id,
+                                }))}
+                                renderEmptyState={() => <EmptyState>No Items</EmptyState>}
+                                className="hidden lg:flex absolute right-0 top-12 z-50 rounded-xl border bg-white   "
+                            >
+                                {!isRefetchingEventsSearch && !isLoadingEventsSearch ? (
+                                    (item: IEvent) => (
+                                        <ListBox.Item
+                                            key={item._id}
+                                            href={`/event/${item.slug}`}
+                                            className="flex items-center gap-2"
+                                        >
+                                            <Image src={`${item.banner}`} alt={`${item.name}`} className="h-[60px] w-2/5 rounded-md object-cover" height={100} width={40} />
+                                            <p className="line-clamp-2 w-3/5 text-wrap">{item.name}</p>
+                                        </ListBox.Item>
+                                    )
+                                ) : (
+                                    <ListBox.Item className="flex items-center" key="Loading">
+                                        <Spinner color="danger" size="sm" />
+                                    </ListBox.Item>
+                                )}
+                            </ListBox>
                         )}
                     </div>
                     <button
@@ -153,7 +196,7 @@ const LandingPageLayoutNavbar = ({
                                             <div className="flex w-full items-center justify-between gap-2">
                                                 <Label>Sign Out</Label>
                                                 <FaArrowUpRightFromSquare className="size-3.5 text-danger" />
-                                            </div>
+                                            </div>/
                                         </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown.Popover>
@@ -187,6 +230,7 @@ const LandingPageLayoutNavbar = ({
             {open && (
                 <div className=" lg:hidden">
                     <ul className="flex flex-col gap-2 px-6">
+                        
                         {NAV_ITEMS.map((item) => (
                             <li key={`nav-${item.label}`}>
                                 <Link
