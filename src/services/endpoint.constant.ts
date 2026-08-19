@@ -6,6 +6,7 @@ const endpoint = {
     EVENT: "/events",
     REGION: "/regions",
     TICKET: "/tickets",
+    ORDER: "/orders"
 }
 
 export default endpoint;

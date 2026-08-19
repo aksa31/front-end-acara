@@ -7,5 +7,11 @@ interface ITicket {
     events?: string;
 }
 
+interface ICart {
+    events: string;
+    ticket: string;
+    quantity: number;
+}
 
-export {ITicket, }
+
+export {ITicket, ICart}

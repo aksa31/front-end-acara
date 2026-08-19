@@ -12,6 +12,7 @@ const eventServices = {
   searchLocationByRegency: (name: string) =>
     instance.get(`${endpoint.REGION}-search?name=${name}`),
   getRegencyById: (id: string) => instance.get(`${endpoint.REGION}/${id}/regency`),
+  getEventBySlug: (slug: string) => instance.get(`${endpoint.EVENT}/${slug}/slug`),
 };
 
 export default eventServices;
