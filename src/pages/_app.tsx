@@ -1,3 +1,4 @@
+import environment from "@/config/environment";
 import { onErrorHandler } from "@/libs/axios/responseHandler";
 import "@/styles/globals.css";
 import { cn } from "@/utils/cn";
@@ -6,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 
 const inter = Inter({
@@ -35,6 +37,11 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
       <QueryClientProvider client={queryClient}>
         <Toast.Provider placement="bottom end" />
         <main className={cn(inter.className)}>
+          <Script
+            src={environment.MIDTRANS_SNAP_URL}
+            data-client-key={environment.MIDTRANS_CLIENT_KEY}
+            strategy="lazyOnload"
+          />
           <Component {...pageProps} />
         </main>
       </QueryClientProvider>

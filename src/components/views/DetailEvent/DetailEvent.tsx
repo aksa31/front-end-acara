@@ -23,11 +23,6 @@ const DetailEvent = () => {
     } = useDetailEvent();
     return (
         <div className="px-8 md-px-0">
-            <Script
-                src={environment.MIDTRANS_SNAP_URL}
-                data-client-key={environment.MIDTRANS_CLIENT_KEY}
-                strategy="lazyOnload"
-            />
             {!isPendingEvent ? (
                 <Breadcrumbs>
                     <BreadcrumbsItem href="/">Home</BreadcrumbsItem>

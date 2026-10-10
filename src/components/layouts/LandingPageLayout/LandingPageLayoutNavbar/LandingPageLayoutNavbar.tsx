@@ -184,11 +184,15 @@ const LandingPageLayoutNavbar = ({
                                 </Dropdown.Trigger>
                                 <Dropdown.Popover>
                                     <Dropdown.Menu>
-                                        <Dropdown.Item id="admin" textValue="Admin" href="/admin/dashboard" className={cn({
-                                            hidden: dataProfile?.role === "ADMIN",
-                                        })}>
-                                            <Label>Admin</Label>
-                                        </Dropdown.Item>
+                                        {dataProfile?.roles === "admin" ? (
+                                            <Dropdown.Item id="admin" textValue="Admin" href="/admin/dashboard">
+                                                <Label>Admin</Label>
+                                            </Dropdown.Item>
+                                        ) : (
+                                            <Dropdown.Item id="member" textValue="Member" href="/member/dashboard">
+                                                <Label>Member</Label>
+                                            </Dropdown.Item>
+                                        )}
                                         <Dropdown.Item id="profile" textValue="Profile" href="/member/profile">
                                             <Label>Profile</Label>
                                         </Dropdown.Item>
@@ -196,7 +200,7 @@ const LandingPageLayoutNavbar = ({
                                             <div className="flex w-full items-center justify-between gap-2">
                                                 <Label>Sign Out</Label>
                                                 <FaArrowUpRightFromSquare className="size-3.5 text-danger" />
-                                            </div>/
+                                            </div>
                                         </Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown.Popover>
@@ -230,7 +234,7 @@ const LandingPageLayoutNavbar = ({
             {open && (
                 <div className=" lg:hidden">
                     <ul className="flex flex-col gap-2 px-6">
-                        
+
                         {NAV_ITEMS.map((item) => (
                             <li key={`nav-${item.label}`}>
                                 <Link
@@ -254,7 +258,7 @@ const LandingPageLayoutNavbar = ({
                                         className={cn(
                                             "font-medium text-default-700 hover:text-red-600 no-underline",
                                             {
-                                                "hidden": dataProfile?.role !== 'admin',
+                                                "hidden": dataProfile?.roles !== 'admin',
                                             }
                                         )}
                                     >
