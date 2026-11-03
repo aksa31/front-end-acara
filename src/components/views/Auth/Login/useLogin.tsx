@@ -37,7 +37,7 @@ const useLogin = () => {
             callbackUrl,
         });
         if (!result?.ok) {
-            throw new Error(result?.error || "Email/username atau password salah");
+            throw new Error(result?.error === "CredentialsSignin" ? "Email/username atau password salah" : (result?.error || "Email/username atau password salah"));
         }
     }
 
