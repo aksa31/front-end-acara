@@ -46,8 +46,13 @@ const Transaction = () => {
                     return (
                         <DropdownAction
                             onPressButtonDetail={() => push(`/member/transaction/${transaction?.orderId}`)}
-                            hideButtonDelete
+                            
+                            onPressButtonDelete={() => {
+                                setSelectedId(`${transaction.orderId}`);
+                                setIsOpenDeleteModal(true);
+                            }}
                         />
+                        
                     );
                 default:
                     return cellValue as ReactNode;

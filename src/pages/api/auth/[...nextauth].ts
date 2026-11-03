@@ -1,6 +1,6 @@
 import environment from "@/config/environment";
 import authServices from "@/services/auth.service";
-import { JWTExtended, SessionExtended, UserExtended } from "@/types/Auth";
+import type { JWTExtended, SessionExtended, UserExtended } from "@/types/Auth";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
