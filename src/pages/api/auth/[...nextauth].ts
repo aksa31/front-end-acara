@@ -53,7 +53,6 @@ export default NextAuth({
                         return null;
                     }
                 } catch (error) {
-                    console.error("Authorize error:", error);
                     return null;
                 }
             },

@@ -9,11 +9,6 @@ import environment from "@/config/environment";
 
 const DetailTransaction = () => {
     const { dataTransaction, dataEvent, dataTicket } = useDetailTransaction();
-
-    console.log(dataTransaction);
-    console.log(dataEvent);
-    console.log(dataTicket);
-
     return (
         <Card className="px-5 py-4">
             <Card.Header>
