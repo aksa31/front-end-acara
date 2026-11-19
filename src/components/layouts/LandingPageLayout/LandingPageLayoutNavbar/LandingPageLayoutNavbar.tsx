@@ -184,15 +184,11 @@ const LandingPageLayoutNavbar = ({
                                 </Dropdown.Trigger>
                                 <Dropdown.Popover>
                                     <Dropdown.Menu>
-                                        {dataProfile?.roles === "admin" ? (
-                                            <Dropdown.Item id="admin" textValue="Admin" href="/admin/dashboard">
+                                        {dataProfile?.roles === "admin" &&
+                                            <Dropdown.Item id="admin" textValue="Admin" href="/admin/event">
                                                 <Label>Admin</Label>
                                             </Dropdown.Item>
-                                        ) : (
-                                            <Dropdown.Item id="member" textValue="Member" href="/member/dashboard">
-                                                <Label>Member</Label>
-                                            </Dropdown.Item>
-                                        )}
+                                        }
                                         <Dropdown.Item id="profile" textValue="Profile" href="/member/profile">
                                             <Label>Profile</Label>
                                         </Dropdown.Item>
@@ -254,7 +250,7 @@ const LandingPageLayoutNavbar = ({
                             <>
                                 <li>
                                     <Link
-                                        href={"/admin/dashboard"}
+                                        href={"/admin/event"}
                                         className={cn(
                                             "font-medium text-default-700 hover:text-red-600 no-underline",
                                             {

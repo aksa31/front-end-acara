@@ -31,7 +31,7 @@ export async function proxy(request: NextRequest) {
     }
 
     if (pathname === "/admin") {
-      return NextResponse.redirect(new URL("/admin/dashboard", request.url));
+      return NextResponse.redirect(new URL("/admin/event", request.url));
     }
 
     return NextResponse.next();
@@ -45,7 +45,7 @@ export async function proxy(request: NextRequest) {
     }
 
     if (pathname === "/member") {
-      return NextResponse.redirect(new URL("/member/dashboard", request.url));
+      return NextResponse.redirect(new URL("/member/profile", request.url));
     }
 
     return NextResponse.next();
