@@ -83,7 +83,7 @@ const useDetailEvent = () => {
         onSuccess: (result) => {
             const transactionToken = result.payment.token;
             (window as any).snap.pay(transactionToken);
-            toast.success("Banner added successfully");
+            toast.success("Payment on progress");
 
         },
     })
